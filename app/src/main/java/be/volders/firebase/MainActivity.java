@@ -16,9 +16,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     User user;
+    Vaccin vaccin;
+    String vaccinNaam;
 
     EditText txtName;
     EditText txtAge;
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         final DatabaseReference nodeRef = database.getReference("node");
 
         final DatabaseReference userRef = database.getReference().child("user");
+        final DatabaseReference vaccinRef = database.getReference().child("vaccin");
 
 
 // ----------------------- DATABASE POPULATION -----------------------
@@ -59,10 +64,78 @@ public class MainActivity extends AppCompatActivity {
 //        nodeRef.child("child node").child("child key").setValue("child value");
 
 //        user = new User("Pieter Volders","36","info");
-//        userRef.push().setValue(user);
+//        user.setId(userRef.push().getKey());
+//        userRef.child(user.getId()).setValue(user);
+//
 //        user = new User("Gaetan Dumortier","12","nog wa info");
-//        userRef.push().setValue(user);
+//        user.setId(userRef.push().getKey());
+//        userRef.child(user.getId()).setValue(user);
 
+
+
+        vaccin = new Vaccin("IPV");
+        vaccin.addWeekInterval(8);
+        vaccin.addWeekInterval(12);
+        vaccin.addWeekInterval(16);
+        vaccin.addMaandInterval(13, 15);
+        vaccin.addJaarInterval(5, 6);
+        vaccin.addZiekte("Poliomyelitis");
+        vaccin.addVaccin("IPV");
+        vaccin.addVaccin("DTPa");
+        vaccin.addVaccin("Hib");
+        vaccin.addVaccin("HBV");
+        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
+
+        vaccin = new Vaccin("DTPa");
+        vaccin.addWeekInterval(8);
+        vaccin.addWeekInterval(12);
+        vaccin.addWeekInterval(16);
+        vaccin.addMaandInterval(13, 15);
+        vaccin.addJaarInterval(5, 6);
+        vaccin.addZiekte("Difterie");
+        vaccin.addZiekte("Tetanus");
+        vaccin.addZiekte("Kinkhoest");
+        vaccin.addVaccin("IPV");
+        vaccin.addVaccin("DTPa");
+        vaccin.addVaccin("Hib");
+        vaccin.addVaccin("HBV");
+        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
+
+        vaccin = new Vaccin("dTpa");
+        vaccin.addJaarInterval(15, 16);
+        vaccin.addJaarInterval(">= 25 jaar en elke 10 jaren");
+        vaccin.addJaarInterval(">= 65 jaar");
+        vaccin.addZiekte("Difterie");
+        vaccin.addZiekte("Tetanus");
+        vaccin.addZiekte("Kinkhoest");
+        vaccin.setVrouw(true);
+        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
+
+        vaccin = new Vaccin("Hib");
+        vaccin.addWeekInterval(8);
+        vaccin.addWeekInterval(12);
+        vaccin.addWeekInterval(16);
+        vaccin.addMaandInterval(13, 15);
+        vaccin.addZiekte("Haemophilus");
+        vaccin.addZiekte("Influenzae");
+        vaccin.addZiekte("type b (Hib)");
+        vaccin.addVaccin("IPV");
+        vaccin.addVaccin("DTPa");
+        vaccin.addVaccin("Hib");
+        vaccin.addVaccin("HBV");
+        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
+
+        vaccin = new Vaccin("HBV");
+        vaccin.addWeekInterval(8);
+        vaccin.addWeekInterval(12);
+        vaccin.addWeekInterval(16);
+        vaccin.addMaandInterval(13, 15);
+        vaccin.addZiekte("Hepatitis B");
+        vaccin.addVaccin("IPV");
+        vaccin.addVaccin("DTPa");
+        vaccin.addVaccin("Hib");
+        vaccin.addVaccin("HBV");
+        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
 
 
@@ -132,10 +205,17 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Gelieve alle velden in te vullen", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    user.setInfo(info);
-                    user.setAge(age);
-                    user.setName(name);
-                    userRef.push().setValue(user);
+                    if (user.getId() == null){
+                        user.setInfo(info);
+                        user.setAge(age);
+                        user.setName(name);
+                        user.setId(userRef.push().getKey());
+                        userRef.child(user.getId()).setValue(user);
+                    }
+                    else{
+                        userRef.child(user.getId()).setValue(user);
+                    }
+
                     clear();
 
                     Toast.makeText(MainActivity.this, name+ " opgeslagen!", Toast.LENGTH_SHORT).show();

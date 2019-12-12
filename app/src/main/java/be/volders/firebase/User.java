@@ -1,22 +1,33 @@
 package be.volders.firebase;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements Serializable {
 
+    private String id;
     private String name;
     private String info;
     private String age;
 
 
     public User(String name,String age,String info) {
+        this.setId(id);
         this.name = name;
         this.age = age;
         this.info = info;
     }
 
     public User() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -45,6 +56,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User:\n" + name + ' ' + age + ' ' + info + ' ';
+        return "User: \n("+getId()+") " + name + ' ' + age + ' ' + info;
     }
 }

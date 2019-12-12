@@ -16,51 +16,45 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapter2.ViewHolder> {
 
-    private static final String TAG ="RecyclerViewAdapter";
+    private static final String TAG ="RecyclerViewAdapter2";
     private Context mContext;
-    private ArrayList<User> mUseres = new ArrayList<>();
-    final DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("user");;
+    private ArrayList<Vaccin> mVaccins = new ArrayList<>();
+    final DatabaseReference vaccinRef = FirebaseDatabase.getInstance().getReference().child("vaccin");;
 
-    public RecyclerViewAdapter(Context mContext, ArrayList<User> mUseres) {
+    public RecyclerViewAdapter2(Context mContext, ArrayList<Vaccin> mVaccins) {
         this.mContext = mContext;
-        this.mUseres = mUseres;
+        this.mVaccins = mVaccins;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem2,parent,false);
         ViewHolder holder = new ViewHolder(view);
         return holder;    }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.name.setText(mUseres.get(position).getName());
-        holder.age.setText(mUseres.get(position).getAge());
-        holder.info.setText(mUseres.get(position).getInfo());
+        holder.vaccinName.setText(mVaccins.get(position).getNaam());
     }
 
     @Override
     public int getItemCount() {
-        return mUseres.size();
+        return mVaccins.size();
     }
 
     //dit EERST maken
     public class ViewHolder extends RecyclerView.ViewHolder
     implements View.OnClickListener{
-        TextView name;
-        TextView age;
-        TextView info;
+        TextView vaccinName;
 
         RelativeLayout parentLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.tv_name);
-            age = itemView.findViewById(R.id.tv_age);
-            info = itemView.findViewById(R.id.tv_info);
+            vaccinName = itemView.findViewById(R.id.vaccin_name);
             parentLayout = itemView.findViewById(R.id.parent_layout);
             itemView.setOnClickListener(this);
         }
@@ -68,9 +62,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            User selectedUser = mUseres.get(position);
-            Log.d(TAG, "onClick: "+selectedUser.toString()+" deleted");
-            userRef.child(selectedUser.getId()).removeValue();
+            Vaccin selectedVaccin = mVaccins.get(position);
+            Log.d(TAG, "onClick: "+selectedVaccin.toString()+" deleted");
+            vaccinRef.child(selectedVaccin.getNaam()).removeValue();
         }
     }
 }
