@@ -15,12 +15,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapter2.ViewHolder> {
 
     private static final String TAG ="RecyclerViewAdapter2";
     private Context mContext;
-    private ArrayList<Vaccin> mVaccins = new ArrayList<>();
+    private List<Vaccin> mVaccins = new ArrayList<>();
     final DatabaseReference vaccinRef = FirebaseDatabase.getInstance().getReference().child("vaccin");;
 
     public RecyclerViewAdapter2(Context mContext, ArrayList<Vaccin> mVaccins) {
@@ -66,8 +67,8 @@ public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapt
         public void onClick(View view) {
             int position = getAdapterPosition();
             Vaccin selectedVaccin = mVaccins.get(position);
-            Log.d(TAG, "onClick: "+selectedVaccin.toString()+" deleted");
             vaccinRef.child(selectedVaccin.getNaam()).removeValue();
+            mVaccins.clear();
         }
     }
 }

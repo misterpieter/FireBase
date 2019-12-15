@@ -5,15 +5,6 @@ import java.util.List;
 
 public class Vaccin {
 
-    /*
-    - id
-	- naam
-	- Array ziektes					            (check: meerdere ziektes = gecombineerd vaccin)
-	- Array namen					            (check: meerdere namen = extra gecombineerd vaccin)
-	- uiterlijkeBeginDatum/minimum leeftijd		(check to input)
-	- List<maandIntervallen (int)>			        (check to input)
-    */
-
     private String naam;
     private Boolean vrouw;
     private List<String> ziektes;
