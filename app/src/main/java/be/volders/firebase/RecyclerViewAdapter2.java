@@ -38,6 +38,7 @@ public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapt
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.vaccinName.setText(mVaccins.get(position).getNaam());
+        holder.ziekteName.setText(mVaccins.get(position).showAllInfo());
     }
 
     @Override
@@ -49,12 +50,14 @@ public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapt
     public class ViewHolder extends RecyclerView.ViewHolder
     implements View.OnClickListener{
         TextView vaccinName;
+        TextView ziekteName;
 
         RelativeLayout parentLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             vaccinName = itemView.findViewById(R.id.vaccin_name);
+            ziekteName = itemView.findViewById(R.id.ziekte_name);
             parentLayout = itemView.findViewById(R.id.parent_layout);
             itemView.setOnClickListener(this);
         }

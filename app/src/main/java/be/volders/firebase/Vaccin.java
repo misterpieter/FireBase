@@ -73,20 +73,6 @@ public class Vaccin {
         return combiVaccins;
     }
 
-    public void addVaccins(List<String> vaccins) {
-        this.combiVaccins = vaccins;
-        this.setCombiOptie();
-    }
-
-    public void addVaccin(String vaccin){
-        combiVaccins.add(vaccin);
-        this.setCombiOptie();
-    }
-    public void deleteVaccin(String vaccin){
-        ziektes.remove(vaccin);
-        this.setCombiOptie();
-    }
-
     public void addZiekte(String ziekte){
         ziektes.add(ziekte);
     }
@@ -125,6 +111,53 @@ public class Vaccin {
 
     public void addJaarInterval(String interval){
         intervallen.add(interval);
+    }
+
+    public void addVaccins(List<String> vaccins) {
+        this.combiVaccins = vaccins;
+        this.setCombiOptie();
+    }
+
+    public void addVaccin(String vaccin){
+        combiVaccins.add(vaccin);
+        this.setCombiOptie();
+    }
+
+    public void deleteVaccin(String vaccin){
+        ziektes.remove(vaccin);
+        this.setCombiOptie();
+    }
+
+    public String showZiektes(){
+        String str = "";
+
+        for(String ziekte : ziektes) {
+            str+="\t"+ziekte+"\n";
+        }
+        return str;
+    }
+
+    public String showIntervallen(){
+        String str = "INTERVALLEN:\n";
+
+        for(String x : intervallen) {
+            str+="\t"+x+"\n";
+        }
+        return str;
+    }
+
+    public String showAllInfo(){
+        String str = "";
+
+        str +="\n"+ showZiektes();
+        str +="\n"+ showIntervallen();
+
+        if(combiOptie == true){
+            str+="\n\t(Gecombineerd vaccin: ";
+            str+="\t"+getCombiVaccins()+")";
+        }
+
+        return str;
     }
 
 
