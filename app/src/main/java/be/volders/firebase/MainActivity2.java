@@ -51,69 +51,69 @@ public class MainActivity2 extends AppCompatActivity {
         final DatabaseReference vaccinRef = database.getReference().child("vaccin");
 
 
-        vaccin = new Vaccin("IPV");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(12);
-        vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
-        vaccin.addJaarInterval(5, 6);
-        vaccin.addZiekte("Poliomyelitis");
-        vaccin.addVaccin("IPV");
-        vaccin.addVaccin("DTPa");
-        vaccin.addVaccin("Hib");
-        vaccin.addVaccin("HBV");
-        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
-
-        vaccin = new Vaccin("DTPa");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(12);
-        vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
-        vaccin.addJaarInterval(5, 6);
-        vaccin.addZiekte("Difterie");
-        vaccin.addZiekte("Tetanus");
-        vaccin.addZiekte("Kinkhoest");
-        vaccin.addVaccin("IPV");
-        vaccin.addVaccin("DTPa");
-        vaccin.addVaccin("Hib");
-        vaccin.addVaccin("HBV");
-        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
-
-        vaccin = new Vaccin("dTpa");
-        vaccin.addJaarInterval(15, 16);
-        vaccin.addJaarInterval(">= 25 jaar en elke 10 jaren");
-        vaccin.addJaarInterval(">= 65 jaar");
-        vaccin.addZiekte("Difterie");
-        vaccin.addZiekte("Tetanus");
-        vaccin.addZiekte("Kinkhoest");
-        vaccin.setVrouw(true);
-        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
-
-        vaccin = new Vaccin("Hib");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(12);
-        vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
-        vaccin.addZiekte("Haemophilus");
-        vaccin.addZiekte("Influenzae");
-        vaccin.addZiekte("type b (Hib)");
-        vaccin.addVaccin("IPV");
-        vaccin.addVaccin("DTPa");
-        vaccin.addVaccin("Hib");
-        vaccin.addVaccin("HBV");
-        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
-
-        vaccin = new Vaccin("HBV");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(12);
-        vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
-        vaccin.addZiekte("Hepatitis B");
-        vaccin.addVaccin("IPV");
-        vaccin.addVaccin("DTPa");
-        vaccin.addVaccin("Hib");
-        vaccin.addVaccin("HBV");
-        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
+//        vaccin = new Vaccin("IPV");
+//        vaccin.addWeekInterval(8);
+//        vaccin.addWeekInterval(12);
+//        vaccin.addWeekInterval(16);
+//        vaccin.addMaandInterval(13, 15);
+//        vaccin.addJaarInterval(5, 6);
+//        vaccin.addZiekte("Poliomyelitis");
+//        vaccin.addVaccin("IPV");
+//        vaccin.addVaccin("DTPa");
+//        vaccin.addVaccin("Hib");
+//        vaccin.addVaccin("HBV");
+//        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
+//
+//        vaccin = new Vaccin("DTPa");
+//        vaccin.addWeekInterval(8);
+//        vaccin.addWeekInterval(12);
+//        vaccin.addWeekInterval(16);
+//        vaccin.addMaandInterval(13, 15);
+//        vaccin.addJaarInterval(5, 6);
+//        vaccin.addZiekte("Difterie");
+//        vaccin.addZiekte("Tetanus");
+//        vaccin.addZiekte("Kinkhoest");
+//        vaccin.addVaccin("IPV");
+//        vaccin.addVaccin("DTPa");
+//        vaccin.addVaccin("Hib");
+//        vaccin.addVaccin("HBV");
+//        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
+//
+//        vaccin = new Vaccin("dTpa");
+//        vaccin.addJaarInterval(15, 16);
+//        vaccin.addJaarInterval(">= 25 jaar en elke 10 jaren");
+//        vaccin.addJaarInterval(">= 65 jaar");
+//        vaccin.addZiekte("Difterie");
+//        vaccin.addZiekte("Tetanus");
+//        vaccin.addZiekte("Kinkhoest");
+//        vaccin.setVrouw(true);
+//        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
+//
+//        vaccin = new Vaccin("Hib");
+//        vaccin.addWeekInterval(8);
+//        vaccin.addWeekInterval(12);
+//        vaccin.addWeekInterval(16);
+//        vaccin.addMaandInterval(13, 15);
+//        vaccin.addZiekte("Haemophilus");
+//        vaccin.addZiekte("Influenzae");
+//        vaccin.addZiekte("type b (Hib)");
+//        vaccin.addVaccin("IPV");
+//        vaccin.addVaccin("DTPa");
+//        vaccin.addVaccin("Hib");
+//        vaccin.addVaccin("HBV");
+//        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
+//
+//        vaccin = new Vaccin("HBV");
+//        vaccin.addWeekInterval(8);
+//        vaccin.addWeekInterval(12);
+//        vaccin.addWeekInterval(16);
+//        vaccin.addMaandInterval(13, 15);
+//        vaccin.addZiekte("Hepatitis B");
+//        vaccin.addVaccin("IPV");
+//        vaccin.addVaccin("DTPa");
+//        vaccin.addVaccin("Hib");
+//        vaccin.addVaccin("HBV");
+//        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
 
 
@@ -148,20 +148,23 @@ public class MainActivity2 extends AppCompatActivity {
         btnSaveVaccin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = txtVaccinName.getText().toString();
+                String vaccinName = txtVaccinName.getText().toString();
                 String ziekteNaam = txtZiekteNaam.getText().toString();
 
-                if(name.isEmpty()){
+                if(vaccinName.isEmpty()){
                     Toast.makeText(MainActivity2.this, "Gelieve eerst een vaccin naam in te vullen", Toast.LENGTH_SHORT).show();
                 }
+                if(ziekteNaam.isEmpty()){
+                    Toast.makeText(MainActivity2.this, "Gelieve eerst een ziekte in te vullen", Toast.LENGTH_SHORT).show();
+                }
                 else {
-                    vaccin.setNaam(name);
+                    vaccin = new Vaccin(vaccinName);
                     vaccin.addZiekte(ziekteNaam);
                     vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
                     clear();
 
-                    Toast.makeText(MainActivity2.this, name+ " opgeslagen!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity2.this, vaccinName+ " opgeslagen!", Toast.LENGTH_SHORT).show();
                     startActivity(i);
                 }
             }

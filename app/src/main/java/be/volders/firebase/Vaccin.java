@@ -35,6 +35,8 @@ public class Vaccin {
         else this.combiOptie = true;
     }
 
+
+
     public Boolean getVrouw() {
         return vrouw;
     }
@@ -121,18 +123,17 @@ public class Vaccin {
 
     public String showZiektes(){
         String str = "";
-
-        for(String ziekte : ziektes) {
-            str+="\t"+ziekte+"\n";
+         for(String ziekte : ziektes) {
+                str+="\t"+ziekte+"\n";
         }
+
         return str;
     }
 
     public String showIntervallen(){
         String str = "INTERVALLEN:\n";
-
-        for(String x : intervallen) {
-            str+="\t"+x+"\n";
+            for (String x : intervallen) {
+                str += "\t" + x + "\n";
         }
         return str;
     }
@@ -140,8 +141,13 @@ public class Vaccin {
     public String showAllInfo(){
         String str = "";
 
-        str +="\n"+ showZiektes();
-        str +="\n"+ showIntervallen();
+        if (ziektes != null) {
+            str += "\n" + showZiektes();
+        }
+
+        if (intervallen != null) {
+            str += "\n" + showIntervallen();
+        }
 
         if(combiOptie == true){
             str+="\n\t(Gecombineerd vaccin: ";

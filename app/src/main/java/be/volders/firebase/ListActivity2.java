@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 public class ListActivity2 extends AppCompatActivity {
 
-    Button btnInput;
     Intent i;
+    Button btnVaccinInput;
 
     private ArrayList<Vaccin> mVaccins = new ArrayList<>();
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -32,7 +32,18 @@ public class ListActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list2);
 
+        btnVaccinInput = findViewById(R.id.buttonVaccinInput);
+        i = new Intent(this,MainActivity2.class);
+
         initDatabaseData();
+
+        //click button
+        btnVaccinInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(i);
+            }
+        });
     }
 
 
@@ -55,19 +66,6 @@ public class ListActivity2 extends AppCompatActivity {
         });
 
     }
-
-
-
-//    private void initData(){
-//        mUsers.add(new User("user 1","1", "info 5"));
-//        mUsers.add(new User("user 2","1", "info 4"));
-//        mUsers.add(new User("user 3","1", "info 3"));
-//        mUsers.add(new User("user 4","1", "info 2"));
-//        mUsers.add(new User("user 5","1", "info 1"));
-//
-////        initRecyclerView();
-//    }
-
 
 
     private void initRecyclerView(){
