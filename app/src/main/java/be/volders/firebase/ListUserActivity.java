@@ -2,32 +2,26 @@ package be.volders.firebase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.firebase.ui.database.FirebaseListAdapter;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-public class ListActivity extends AppCompatActivity {
+public class ListUserActivity extends AppCompatActivity {
 
-    Button btnInput;
+    Button buttonInputNewPatient;
     Intent i;
 
     private ArrayList<User> mUsers = new ArrayList<>();
@@ -38,16 +32,15 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_list_users);
 
-        btnInput = findViewById(R.id.buttoninput);
-        i = new Intent(this,MainActivity.class);
+        buttonInputNewPatient = findViewById(R.id.buttonInputNewPatient);
+        i = new Intent(this, AddUserActivity.class);
 
         initDatabaseData();
 
-
         //click button
-        btnInput.setOnClickListener(new View.OnClickListener() {
+        buttonInputNewPatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(i);
@@ -77,24 +70,11 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
-
-
-//    private void initData(){
-//        mUsers.add(new User("user 1","1", "info 5"));
-//        mUsers.add(new User("user 2","1", "info 4"));
-//        mUsers.add(new User("user 3","1", "info 3"));
-//        mUsers.add(new User("user 4","1", "info 2"));
-//        mUsers.add(new User("user 5","1", "info 1"));
-//
-////        initRecyclerView();
-//    }
-
-
-
     private void initRecyclerView(){
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mUsers);
+        RecyclerView recyclerView = findViewById(R.id.recycler_user_view);
+        RecyclerUserViewAdapter adapter = new RecyclerUserViewAdapter(this, mUsers);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
 }

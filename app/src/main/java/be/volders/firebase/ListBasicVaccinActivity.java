@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ListActivity2 extends AppCompatActivity {
+public class ListBasicVaccinActivity extends AppCompatActivity {
 
     Intent i;
     Button btnVaccinInput;
@@ -30,10 +30,10 @@ public class ListActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list2);
+        setContentView(R.layout.activity_list_vaccins);
 
         btnVaccinInput = findViewById(R.id.buttonVaccinInput);
-        i = new Intent(this,MainActivity2.class);
+        i = new Intent(this, AddVaccinActivity.class);
 
         initDatabaseData();
 
@@ -70,7 +70,7 @@ public class ListActivity2 extends AppCompatActivity {
 
     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.recycler_view2);
-        RecyclerViewAdapter2 adapter2 = new RecyclerViewAdapter2(this, mVaccins);
+        RecyclerVaccinViewAdapter adapter2 = new RecyclerVaccinViewAdapter(this, mVaccins);
         recyclerView.setAdapter(adapter2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

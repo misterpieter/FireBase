@@ -1,12 +1,12 @@
 package be.volders.firebase;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,14 +17,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapter2.ViewHolder> {
+public class RecyclerVaccinViewAdapter extends RecyclerView.Adapter<RecyclerVaccinViewAdapter.ViewHolder> {
 
-    private static final String TAG ="RecyclerViewAdapter2";
+    private static final String TAG ="RecyclerVaccinViewAdapter";
     private Context mContext;
     private List<Vaccin> mVaccins = new ArrayList<>();
     final DatabaseReference vaccinRef = FirebaseDatabase.getInstance().getReference().child("vaccin");;
 
-    public RecyclerViewAdapter2(Context mContext, ArrayList<Vaccin> mVaccins) {
+    public RecyclerVaccinViewAdapter(Context mContext, ArrayList<Vaccin> mVaccins) {
         this.mContext = mContext;
         this.mVaccins = mVaccins;
     }
@@ -32,7 +32,7 @@ public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapt
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem2,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_vaccin,parent,false);
         ViewHolder holder = new ViewHolder(view);
         return holder;    }
 
@@ -67,6 +67,7 @@ public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapt
         public void onClick(View view) {
             int position = getAdapterPosition();
             Vaccin selectedVaccin = mVaccins.get(position);
+            Toast.makeText(view.getContext(),selectedVaccin.getNaam()+" Deleted!", Toast.LENGTH_SHORT).show();
             vaccinRef.child(selectedVaccin.getNaam()).removeValue();
             mVaccins.clear();
         }

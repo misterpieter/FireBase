@@ -16,37 +16,34 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
-public class MainActivity extends AppCompatActivity {
+public class AddUserActivity extends AppCompatActivity {
 
     User user;
-    Vaccin vaccin;
-    String vaccinNaam;
-
     EditText txtName;
-    EditText txtAge;
-    EditText txtInfo;
+    EditText txtgbDt;
+
     Button btnSave;
     Button btnList;
-    String TAG = "MainActivity: ";
+    Button btnListVaccins;
+    String TAG = "AddUserActivity: ";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_user);
         user = new User();
-        final Intent i = new Intent(this,ListActivity.class);
+        final Intent i = new Intent(this, ListUserActivity.class);
+        final Intent i2 = new Intent(this, ListBasicVaccinActivity.class);
 
 
 
 // ----------------------- UI SETUP -----------------------
         txtName = findViewById(R.id.txtName);
-        txtAge = findViewById(R.id.txtAge);
-        txtInfo = findViewById(R.id.txtInfo);
-        btnSave = findViewById(R.id.btnSave);
-        btnList = findViewById(R.id.btnList);
+        txtgbDt = findViewById(R.id.txt_gbdt);
+        btnSave = findViewById(R.id.btnSavePatient);
+        btnList = findViewById(R.id.btnListPatients);
+        btnListVaccins = findViewById(R.id.btnListVaccins);
 
 
 // ----------------------- DATABASE SETUP -----------------------
@@ -54,90 +51,26 @@ public class MainActivity extends AppCompatActivity {
         final DatabaseReference reference = database.getReference();
         final DatabaseReference nodeRef = database.getReference("node");
 
+
         final DatabaseReference userRef = database.getReference().child("user");
         final DatabaseReference vaccinRef = database.getReference().child("vaccin");
 
 
 // ----------------------- DATABASE POPULATION -----------------------
-//        reference.child("basic key").setValue("basic value");
-//        nodeRef.child("node key").setValue("node value");
-//        nodeRef.child("child node").child("child key").setValue("child value");
+        reference.child("basic key").setValue("basic value");
+        nodeRef.child("node key").setValue("node value");
+        nodeRef.child("child node").child("child key").setValue("child value");
 
-//        user = new User("Pieter Volders","36","info");
-//        user.setId(userRef.push().getKey());
-//        userRef.child(user.getId()).setValue(user);
-//
-//        user = new User("Gaetan Dumortier","12","nog wa info");
-//        user.setId(userRef.push().getKey());
-//        userRef.child(user.getId()).setValue(user);
+        user = new User("Pieter Volders","03/03/1983");
+        user.setRisicoGroep(true);
+        userRef.child(user.getName()).setValue(user);
 
+        user = new User("Gaetan Dumortier","01/01/2000");
+        userRef.child(user.getName()).setValue(user);
 
-
-        vaccin = new Vaccin("IPV");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(12);
-        vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
-        vaccin.addJaarInterval(5, 6);
-        vaccin.addZiekte("Poliomyelitis");
-        vaccin.addVaccin("IPV");
-        vaccin.addVaccin("DTPa");
-        vaccin.addVaccin("Hib");
-        vaccin.addVaccin("HBV");
-        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
-
-        vaccin = new Vaccin("DTPa");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(12);
-        vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
-        vaccin.addJaarInterval(5, 6);
-        vaccin.addZiekte("Difterie");
-        vaccin.addZiekte("Tetanus");
-        vaccin.addZiekte("Kinkhoest");
-        vaccin.addVaccin("IPV");
-        vaccin.addVaccin("DTPa");
-        vaccin.addVaccin("Hib");
-        vaccin.addVaccin("HBV");
-        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
-
-        vaccin = new Vaccin("dTpa");
-        vaccin.addJaarInterval(15, 16);
-        vaccin.addJaarInterval(">= 25 jaar en elke 10 jaren");
-        vaccin.addJaarInterval(">= 65 jaar");
-        vaccin.addZiekte("Difterie");
-        vaccin.addZiekte("Tetanus");
-        vaccin.addZiekte("Kinkhoest");
-        vaccin.setVrouw(true);
-        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
-
-        vaccin = new Vaccin("Hib");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(12);
-        vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
-        vaccin.addZiekte("Haemophilus");
-        vaccin.addZiekte("Influenzae");
-        vaccin.addZiekte("type b (Hib)");
-        vaccin.addVaccin("IPV");
-        vaccin.addVaccin("DTPa");
-        vaccin.addVaccin("Hib");
-        vaccin.addVaccin("HBV");
-        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
-
-        vaccin = new Vaccin("HBV");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(12);
-        vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
-        vaccin.addZiekte("Hepatitis B");
-        vaccin.addVaccin("IPV");
-        vaccin.addVaccin("DTPa");
-        vaccin.addVaccin("Hib");
-        vaccin.addVaccin("HBV");
-        vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
-
-
+        user = new User("Vicky Lenaerts","01/02/1986");
+        user.setZwanger(true);
+        userRef.child(user.getName()).setValue(user);
 
 
         // ----------------------- READ METHODS -----------------------
@@ -198,27 +131,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name = txtName.getText().toString();
-                String age = txtAge.getText().toString();
-                String info = txtInfo.getText().toString();
+                String gebDt = txtgbDt.getText().toString();
 
-                if(name.isEmpty() || age.isEmpty()|info.isEmpty()){
-                    Toast.makeText(MainActivity.this, "Gelieve alle velden in te vullen", Toast.LENGTH_SHORT).show();
+                if(name.isEmpty() || gebDt.isEmpty()){
+                    Toast.makeText(AddUserActivity.this, "Gelieve alle velden in te vullen", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    if (user.getId() == null){
-                        user.setInfo(info);
-                        user.setAge(age);
-                        user.setName(name);
-                        user.setId(userRef.push().getKey());
-                        userRef.child(user.getId()).setValue(user);
-                    }
-                    else{
-                        userRef.child(user.getId()).setValue(user);
-                    }
+
+                    // normaal eerst ff checken of het al besta -> eventueel aanpasse
+                    // nu nog gewone safe
+
+                    user = new User(name, gebDt);
+                    userRef.child(user.getName()).setValue(user);
 
                     clear();
 
-                    Toast.makeText(MainActivity.this, name+ " opgeslagen!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddUserActivity.this, name+ " opgeslagen!", Toast.LENGTH_SHORT).show();
                     startActivity(i);
                 }
             }
@@ -233,12 +161,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        btnListVaccins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(i2);
+            }
+        });
+
+
     }
+
+
+
 
 
     private void clear() {
         txtName.setText("");
-        txtAge.setText("");
-        txtInfo.setText("");
+        txtgbDt.setText("");
     }
 }

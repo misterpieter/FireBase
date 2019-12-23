@@ -6,43 +6,66 @@ import java.util.List;
 public class Vaccin {
 
     private String naam;
-    private Boolean vrouw;
+    private String info;
+
+    private Boolean boolZwangereVrouw;
+    private Boolean boolCombiVaccin;
+    private Boolean boolMultipleVaccinOptie;
+
     private List<String> ziektes;
     private List<String> combiVaccins;
-    private List<String> intervallen;
-    private Boolean combiOptie;
+    private List<String> minLeeftijden;
 
     public Vaccin(String naam) {
         this.naam = naam;
         this.ziektes = new ArrayList<>();
         this.combiVaccins = new ArrayList<>();
-        this.intervallen = new ArrayList<>();
-        this.vrouw = false;
-        this.combiOptie = false;
+        this.minLeeftijden = new ArrayList<>();
+        this.boolZwangereVrouw = false;
+        this.boolCombiVaccin = false;
+        this.boolMultipleVaccinOptie = false;
+        info = "";
     }
 
     public Vaccin() {
     }
 
-    public Boolean getCombiOptie() {
-        return combiOptie;
+    public Boolean getBoolCombiVaccin() {
+        return boolCombiVaccin;
     }
 
-    public void setCombiOptie() {
-        if (this.getCombiVaccins().isEmpty()){
-            this.combiOptie = false;
+    public void setCombiVaccin() {
+        if (this.getZiektes().isEmpty() || this.getZiektes().size() == 1){
+            this.boolCombiVaccin = false;
         }
-        else this.combiOptie = true;
+        else this.boolCombiVaccin = true;
     }
 
-
-
-    public Boolean getVrouw() {
-        return vrouw;
+    public Boolean getBoolMultipleVaccinOptie() {
+        return boolMultipleVaccinOptie;
     }
 
-    public void setVrouw(Boolean vrouw) {
-        this.vrouw = vrouw;
+    public void setBoolMultipleVaccinOptie() {
+        if (this.getCombiVaccins().isEmpty()){
+            this.boolMultipleVaccinOptie = false;
+        }
+        else this.boolMultipleVaccinOptie = true;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public Boolean getBoolZwangereVrouw() {
+        return boolZwangereVrouw;
+    }
+
+    public void setBoolZwangereVrouw(Boolean boolZwangereVrouw) {
+        this.boolZwangereVrouw = boolZwangereVrouw;
     }
 
 
@@ -68,57 +91,67 @@ public class Vaccin {
 
     public void addZiekte(String ziekte){
         ziektes.add(ziekte);
+        this.setCombiVaccin();
     }
 
     public void deleteZiekte(String ziekte){
         ziektes.remove(ziekte);
+        this.setCombiVaccin();
     }
 
-    public List<String> getIntervallen() {
-        return intervallen;
+    public List<String> getMinLeeftijden() {
+        return minLeeftijden;
     }
 
-    public void setIntervallen(List<String> intervallen) {
-        this.intervallen = intervallen;
+    public void setMinLeeftijden(List<String> minLeeftijden) {
+        this.minLeeftijden = minLeeftijden;
     }
 
     public void addWeekInterval(int interval){
-        intervallen.add(interval+" weken");
+        minLeeftijden.add(interval+" weken");
+    }
+    public void addWeekInterval(String interval){
+        minLeeftijden.add(interval);
     }
 
+
     public void addMaandInterval(int interval){
-        intervallen.add(interval+" maand");
+        minLeeftijden.add(interval+" maand");
     }
 
     public void addMaandInterval(int interval, int interval2){
-        intervallen.add(interval+" - "+ interval2+" maand");
+        minLeeftijden.add(interval+" - "+ interval2+" maand");
+    }
+    public void addMaandInterval(String interval){
+        minLeeftijden.add(interval);
     }
 
+
     public void addJaarInterval(int interval, int interval2){
-        intervallen.add(interval+" - "+ interval2+" jaar");
+        minLeeftijden.add(interval+" - "+ interval2+" jaar");
     }
 
     public void addJaarInterval(int interval){
-        intervallen.add(interval+" jaar");
+        minLeeftijden.add(interval+" jaar");
     }
 
     public void addJaarInterval(String interval){
-        intervallen.add(interval);
+        minLeeftijden.add(interval);
     }
 
     public void addVaccins(List<String> vaccins) {
         this.combiVaccins = vaccins;
-        this.setCombiOptie();
+        this.setBoolMultipleVaccinOptie();
     }
 
     public void addVaccin(String vaccin){
         combiVaccins.add(vaccin);
-        this.setCombiOptie();
+        this.setBoolMultipleVaccinOptie();
     }
 
     public void deleteVaccin(String vaccin){
         ziektes.remove(vaccin);
-        this.setCombiOptie();
+        this.setBoolMultipleVaccinOptie();
     }
 
     public String showZiektes(){
@@ -131,8 +164,8 @@ public class Vaccin {
     }
 
     public String showIntervallen(){
-        String str = "INTERVALLEN:\n";
-            for (String x : intervallen) {
+        String str = "Vaccin te geven op volgende minLeeftijden:\n";
+            for (String x : minLeeftijden) {
                 str += "\t" + x + "\n";
         }
         return str;
@@ -145,25 +178,22 @@ public class Vaccin {
             str += "\n" + showZiektes();
         }
 
-        if (intervallen != null) {
+        if (minLeeftijden != null) {
             str += "\n" + showIntervallen();
         }
 
-        if(combiOptie == true){
-            str+="\n\t(Gecombineerd vaccin: ";
-            str+="\t"+getCombiVaccins()+")";
+        if(boolMultipleVaccinOptie == true){
+            str+="\n(Combo vaccin mogelijk met: ";
+            str+="\t"+getCombiVaccins()+")\n";
         }
+
+        str+= "\nInfo:\n"+info;
 
         return str;
     }
 
 
-    @Override
-    public String toString() {
-        return "\nVaccin\n" +
-                "\n\tnaam: " + naam +
-                "\n\tziektes: " + getZiektes() +
-                "\n\tcombiVaccins: " + getCombiVaccins() +
-                "\n\tntervallen: " + getIntervallen();
+    public void saveAllVaccins2Database(){
+
     }
 }

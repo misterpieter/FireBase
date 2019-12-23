@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity2">
+    tools:context=".AddVaccinActivity">
 
     <EditText
         android:id="@+id/txtVaccinName"
@@ -35,25 +35,12 @@
         app:layout_constraintTop_toBottomOf="@+id/txtVaccinName" />
 
     <Button
-        android:id="@+id/btnAddZiekte"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="32dp"
-        android:text="Toevoegen Ziekte"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtZiekteNaam" />
-
-    <Button
         android:id="@+id/btnSaveVaccin"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
-        android:text="save"
+        android:text="Opslaan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -63,7 +50,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:text="Lijst"
+        android:text="Vaccin Lijst"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -4,30 +4,23 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User implements Serializable {
+public class User {
 
-    private String id;
     private String name;
-    private String info;
-    private String age;
+    private String gbDt;
+    private Boolean zwanger;
+    private Boolean risicoGroep;
 
 
-    public User(String name,String age,String info) {
-        this.setId(id);
+    public User(String name,String gbDt) {
         this.name = name;
-        this.age = age;
-        this.info = info;
+        this.gbDt = gbDt;
+        this.zwanger = false;
+        this.risicoGroep = false;
     }
 
     public User() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this("","");
     }
 
     public String getName() {
@@ -38,24 +31,27 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getInfo() {
-        return info;
+    public String getGbDt() {
+        return gbDt;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setGbDt(String gbDt) {
+        this.gbDt = gbDt;
     }
 
-    public String getAge() {
-        return age;
+    public Boolean getZwanger() {
+        return zwanger;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setZwanger(Boolean zwanger) {
+        this.zwanger = zwanger;
     }
 
-    @Override
-    public String toString() {
-        return "User: \n("+getId()+") " + name + ' ' + age + ' ' + info;
+    public Boolean getRisicoGroep() {
+        return risicoGroep;
+    }
+
+    public void setRisicoGroep(Boolean risicoGroep) {
+        this.risicoGroep = risicoGroep;
     }
 }
