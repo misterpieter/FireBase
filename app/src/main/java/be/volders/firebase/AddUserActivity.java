@@ -37,7 +37,6 @@ public class AddUserActivity extends AppCompatActivity {
         final Intent i2 = new Intent(this, ListBasicVaccinActivity.class);
 
 
-
 // ----------------------- UI SETUP -----------------------
         txtName = findViewById(R.id.txtName);
         txtgbDt = findViewById(R.id.txt_gbdt);
@@ -61,14 +60,14 @@ public class AddUserActivity extends AppCompatActivity {
         nodeRef.child("node key").setValue("node value");
         nodeRef.child("child node").child("child key").setValue("child value");
 
-        user = new User("Pieter Volders","03/03/1983");
+        user = new User("Pieter Volders", "03/03/1983");
         user.setRisicoGroep(true);
         userRef.child(user.getName()).setValue(user);
 
-        user = new User("Gaetan Dumortier","01/01/2000");
+        user = new User("Gaetan Dumortier", "01/01/2000");
         userRef.child(user.getName()).setValue(user);
 
-        user = new User("Vicky Lenaerts","01/02/1986");
+        user = new User("Vicky Lenaerts", "01/02/1986");
         user.setZwanger(true);
         userRef.child(user.getName()).setValue(user);
 
@@ -102,7 +101,6 @@ public class AddUserActivity extends AppCompatActivity {
 //                );
 
 
-
                 // ----------------------- GET ALL USERS  -----------------------
                 DataSnapshot users = dataSnapshot.child("user");
 
@@ -113,7 +111,7 @@ public class AddUserActivity extends AppCompatActivity {
                 // -----------------------      v2       -----------------------
                 for (DataSnapshot snapshot : users.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    Log.d(TAG+" snapshot: ", user.toString());
+                    Log.d(TAG + " snapshot: ", user.toString());
                 }
 
             }
@@ -133,21 +131,22 @@ public class AddUserActivity extends AppCompatActivity {
                 String name = txtName.getText().toString();
                 String gebDt = txtgbDt.getText().toString();
 
-                if(name.isEmpty() || gebDt.isEmpty()){
+                if (name.isEmpty() || gebDt.isEmpty()) {
                     Toast.makeText(AddUserActivity.this, "Gelieve alle velden in te vullen", Toast.LENGTH_SHORT).show();
-                }
-                else {
-
+                } else {
                     // normaal eerst ff checken of het al besta -> eventueel aanpasse
                     // nu nog gewone safe
 
                     user = new User(name, gebDt);
                     userRef.child(user.getName()).setValue(user);
 
+                    i2.putExtra("patient_name", name);
+                    i2.putExtra("patient_dob", gebDt);
+
                     clear();
 
-                    Toast.makeText(AddUserActivity.this, name+ " opgeslagen!", Toast.LENGTH_SHORT).show();
-                    startActivity(i);
+                    Toast.makeText(AddUserActivity.this, name + " opgeslagen!", Toast.LENGTH_SHORT).show();
+                    // startActivity(i);
                 }
             }
         });
@@ -171,10 +170,6 @@ public class AddUserActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
 
     private void clear() {
         txtName.setText("");
