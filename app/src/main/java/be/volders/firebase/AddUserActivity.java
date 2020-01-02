@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,13 +23,11 @@ import be.volders.firebase.models.User;
 public class AddUserActivity extends AppCompatActivity {
 
     User user;
-    EditText txtName;
-    EditText txtgbDt;
-
-    Button btnSave;
-    Button btnListVaccins;
+    EditText txtName, txtgbDt;
+    RadioButton rbIsMan, rbIsWomen;
+    CheckBox riskGroup;
+    Button btnSave, btnListVaccins;
     String TAG = "AddUserActivity: ";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,25 +40,27 @@ public class AddUserActivity extends AppCompatActivity {
 // ----------------------- UI SETUP -----------------------
         txtName = findViewById(R.id.txtName);
         txtgbDt = findViewById(R.id.txt_gbdt);
+        riskGroup = findViewById(R.id.chb_risico);
+        rbIsMan = findViewById(R.id.rb_man);
+        rbIsWomen = findViewById(R.id.rb_vrouw);
+
         btnSave = findViewById(R.id.btnSavePatient);
         btnListVaccins = findViewById(R.id.btnListVaccins);
-
 
 // ----------------------- DATABASE SETUP -----------------------
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference reference = database.getReference();
         final DatabaseReference nodeRef = database.getReference("node");
 
-
         final DatabaseReference userRef = database.getReference().child("user");
         final DatabaseReference vaccinRef = database.getReference().child("vaccin");
-
 
 // ----------------------- DATABASE POPULATION -----------------------
         reference.child("basic key").setValue("basic value");
         nodeRef.child("node key").setValue("node value");
         nodeRef.child("child node").child("child key").setValue("child value");
 
+        /*
         user = new User("Pieter Volders", "03/03/1983");
         user.setRisicoGroep(true);
         userRef.child(user.getName()).setValue(user);
@@ -69,7 +71,7 @@ public class AddUserActivity extends AppCompatActivity {
         user = new User("Vicky Lenaerts", "01/02/1986");
         user.setZwanger(true);
         userRef.child(user.getName()).setValue(user);
-
+         */
 
         // ----------------------- READ METHODS -----------------------
         reference.addValueEventListener(new ValueEventListener() {
@@ -81,31 +83,8 @@ public class AddUserActivity extends AppCompatActivity {
                 String data = "";
                 data = dataSnapshot.getValue().toString();
 
-
-                // ----------------------- TEST METHODS -----------------------
-//                DataSnapshot basicKey = dataSnapshot.child("basic key");
-//                DataSnapshot node = dataSnapshot.child("node");
-//                DataSnapshot nodeKey = node.child("node key");
-//                DataSnapshot childNode = node.child("child node");
-//                DataSnapshot childKey = childNode.child("child key");
-//
-//
-//                Log.d(TAG, "Database info: "
-//                        +"\n\ndata: "+ data
-//                        +"\nnode data: "+ node
-//                        +"\nchild node data: "+ childNode
-//                        +"\n\n1 "+ basicKey.getKey()+": "+basicKey.getValue()
-//                        +"\n\n2 "+ childKey.getKey()+": "+childKey.getValue()
-//                        +"\n\n3 "+ nodeKey.getKey()+": "+nodeKey.getValue()
-//                );
-
-
                 // ----------------------- GET ALL USERS  -----------------------
                 DataSnapshot users = dataSnapshot.child("user");
-
-//                // -----------------------      v1       -----------------------
-//                Map<String,Object>mapper = (HashMap<String,Object>) users.getValue();
-//                Log.d(TAG+ " map: ", mapper.toString());
 
                 // -----------------------      v2       -----------------------
                 for (DataSnapshot snapshot : users.getChildren()) {
@@ -122,7 +101,6 @@ public class AddUserActivity extends AppCompatActivity {
             }
         });
 
-
         //click button
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,19 +111,24 @@ public class AddUserActivity extends AppCompatActivity {
                 if (name.isEmpty() || gebDt.isEmpty()) {
                     Toast.makeText(AddUserActivity.this, "Gelieve alle velden in te vullen", Toast.LENGTH_SHORT).show();
                 } else {
-                    // normaal eerst ff checken of het al besta -> eventueel aanpasse
-                    // nu nog gewone safe
-
                     user = new User(name, gebDt);
                     userRef.child(user.getName()).setValue(user);
 
+                    // Send patient name and date of birth as extra with intent.
                     i2.putExtra("patient_name", name);
                     i2.putExtra("patient_dob", gebDt);
 
+                    // Check if patient is in a riskgroup or not
+                    boolean isRiskGroup = riskGroup.isChecked();
+                    i2.putExtra("patient_riskgroup", isRiskGroup);
+
+                    // Make out what gender is selected
+                    String gender = rbIsMan.isChecked() ? "m" : "v";
+                    i2.putExtra("patient_gender", gender);
+
                     clear();
 
-                    Toast.makeText(AddUserActivity.this, name + " opgeslagen!", Toast.LENGTH_SHORT).show();
-                    // startActivity(i);
+                    // TODO: Open new activity, displaying a multi-select view containing all vaccins, based on patient DOB
                 }
             }
         });
@@ -156,12 +139,11 @@ public class AddUserActivity extends AppCompatActivity {
                 startActivity(i2);
             }
         });
-
-
     }
 
     private void clear() {
         txtName.setText("");
         txtgbDt.setText("");
+        riskGroup.setChecked(false);
     }
 }
