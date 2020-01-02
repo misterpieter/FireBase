@@ -7,14 +7,34 @@
     android:padding="10dp"
     android:layout_marginBottom="2dp"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:id="@+id/linearLayout">
 
     <TextView
-        android:id="@+id/text_view"
+        android:id="@+id/name"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="#FFF"
+        android:textStyle="bold"
+        android:textSize="16sp"
         android:padding="10dp"
-        tools:text="TextView" />
+        tools:text="Vaccin Name"
+        tools:layout_conversion_absoluteHeight="41dp"
+        tools:layout_editor_absoluteY="10dp"
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_conversion_absoluteWidth="392dp" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:textSize="12sp"
+        android:padding="10dp"
+        tools:text="Vaccin Info"
+        tools:layout_conversion_absoluteHeight="0dp"
+        tools:layout_editor_absoluteY="51dp"
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_conversion_absoluteWidth="392dp" />
 
 </LinearLayout>

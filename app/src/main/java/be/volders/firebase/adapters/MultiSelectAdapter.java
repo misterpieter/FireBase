@@ -30,14 +30,26 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final Vaccin vaccin = mModelList.get(position);
-        holder.textView.setText(vaccin.getNaam());
-        holder.view.setBackgroundColor(vaccin.isSelected() ? Color.CYAN : Color.WHITE);
 
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        // Set UI members
+        holder.vaccinName.setText(vaccin.getNaam());
+        String ziektes = "";
+        for (String ziekte : vaccin.getZiektes()) {
+            ziektes += ziekte + " ";
+        }
+        holder.vaccinInfo.setText("Ziektes: " + ziektes);
+
+        holder.view.setBackgroundColor(vaccin.isSelected() ? Color.CYAN : Color.WHITE);
+        holder.vaccinName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                vaccin.setSelected(!vaccin.isSelected());
-                holder.view.setBackgroundColor(vaccin.isSelected() ? Color.CYAN : Color.WHITE);
+                itemClicked(vaccin, holder);
+            }
+        });
+        holder.vaccinInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClicked(vaccin, holder);
             }
         });
     }
@@ -50,12 +62,18 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private View view;
-        private TextView textView;
+        private TextView vaccinName, vaccinInfo;
 
         private MyViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            textView = itemView.findViewById(R.id.text_view);
+            vaccinName = itemView.findViewById(R.id.name);
+            vaccinInfo = itemView.findViewById(R.id.info);
         }
+    }
+
+    private void itemClicked(Vaccin vaccin, MyViewHolder holder) {
+        vaccin.setSelected(!vaccin.isSelected());
+        holder.view.setBackgroundColor(vaccin.isSelected() ? Color.CYAN : Color.WHITE);
     }
 }

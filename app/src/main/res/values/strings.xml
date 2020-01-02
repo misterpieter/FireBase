@@ -10,6 +10,8 @@
     <string name="btn_addpatient">Voeg patient toe</string>
     <string name="btn_listvaccins">Overzicht vaccins</string>
 
+    <string name="lbl_info">Gelieve in onderstaande lijst alle reeds toegediende vaccins te selecteren alvorens verder te gaan.</string>
+
     <!-- Activity: add_vaccin -->
     <string name="txt_vaccinname">Naam vaccin</string>
     <string name="txt_ziektename">Naam ziekte</string>
