@@ -26,7 +26,7 @@ public class AddUserActivity extends AppCompatActivity {
     EditText txtName, txtgbDt;
     RadioButton rbIsMan, rbIsWomen;
     CheckBox riskGroup;
-    Button btnSave, btnListVaccins;
+    Button btnSave, btnListVaccins, button;
     String TAG = "AddUserActivity: ";
 
     @Override
@@ -35,6 +35,7 @@ public class AddUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_user);
         user = new User();
         final Intent i2 = new Intent(this, ListBasicVaccinActivity.class);
+        final Intent overview = new Intent(this, GivenVaccinsActivity.class);
 
 
 // ----------------------- UI SETUP -----------------------
@@ -46,6 +47,7 @@ public class AddUserActivity extends AppCompatActivity {
 
         btnSave = findViewById(R.id.btnSavePatient);
         btnListVaccins = findViewById(R.id.btnListVaccins);
+        button = findViewById(R.id.button);
 
 // ----------------------- DATABASE SETUP -----------------------
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -137,6 +139,13 @@ public class AddUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(i2);
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(overview);
             }
         });
     }

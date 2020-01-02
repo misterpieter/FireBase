@@ -11,6 +11,7 @@ public class Vaccin {
     private Boolean boolZwangereVrouw;
     private Boolean boolCombiVaccin;
     private Boolean boolMultipleVaccinOptie;
+    private boolean isSelected;
 
     private List<String> ziektes;
     private List<String> combiVaccins;
@@ -192,8 +193,23 @@ public class Vaccin {
         return str;
     }
 
+    public void setBoolCombiVaccin(Boolean boolCombiVaccin) {
+        this.boolCombiVaccin = boolCombiVaccin;
+    }
 
-    public void saveAllVaccins2Database() {
+    public void setBoolMultipleVaccinOptie(Boolean boolMultipleVaccinOptie) {
+        this.boolMultipleVaccinOptie = boolMultipleVaccinOptie;
+    }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public void setCombiVaccins(List<String> combiVaccins) {
+        this.combiVaccins = combiVaccins;
     }
 }

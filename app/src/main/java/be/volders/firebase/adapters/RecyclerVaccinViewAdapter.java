@@ -1,4 +1,4 @@
-package be.volders.firebase;
+package be.volders.firebase.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.volders.firebase.R;
 import be.volders.firebase.models.Vaccin;
 
 public class RecyclerVaccinViewAdapter extends RecyclerView.Adapter<RecyclerVaccinViewAdapter.ViewHolder> {

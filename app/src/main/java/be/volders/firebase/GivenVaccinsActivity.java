@@ -1,9 +1,6 @@
 package be.volders.firebase;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,47 +13,29 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import be.volders.firebase.adapters.RecyclerVaccinViewAdapter;
+import be.volders.firebase.adapters.MultiSelectAdapter;
 import be.volders.firebase.helpers.DateHelper;
 import be.volders.firebase.models.Vaccin;
 
-public class ListBasicVaccinActivity extends AppCompatActivity {
+public class GivenVaccinsActivity extends AppCompatActivity {
 
-    Intent i;
-    Button btnVaccinInput;
-    String patientName;
-    String patientDob;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
 
     private ArrayList<Vaccin> mVaccins = new ArrayList<>();
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     final DatabaseReference reference = database.getReference();
-    private static final String TAG = "ListA: ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_vaccins);
-
-        btnVaccinInput = findViewById(R.id.buttonVaccinInput);
-        i = new Intent(this, AddVaccinActivity.class);
-
-        // Read patient data from AddUserActivity
-        Intent patientData = getIntent();
-        if (patientData.getExtras() != null) {
-            patientName = patientData.getStringExtra("patient_name");
-            patientDob = patientData.getStringExtra("patient_dob");
-        }
+        setContentView(R.layout.activity_given_vaccins);
 
         initDatabaseData();
 
-        //click button
-        btnVaccinInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(i);
-            }
-        });
+        mRecyclerView = findViewById(R.id.recycler_view);
     }
 
     private void initDatabaseData() {
@@ -66,6 +45,7 @@ public class ListBasicVaccinActivity extends AppCompatActivity {
                 DataSnapshot vaccins = dataSnapshot.child("vaccin");
                 int age = 0;
 
+                /*
                 // Requires API level 26 or above.
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     if (patientDob != null) {
@@ -73,14 +53,15 @@ public class ListBasicVaccinActivity extends AppCompatActivity {
                         System.out.println("leeftijd in maanden: " + age);
                     }
                 }
+                 */
 
                 for (DataSnapshot snapshot : vaccins.getChildren()) {
                     Vaccin vaccin = snapshot.getValue(Vaccin.class);
-
                     mVaccins.add(vaccin);
                 }
-                initRecyclerView();
+                setRecyclerView();
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -89,11 +70,11 @@ public class ListBasicVaccinActivity extends AppCompatActivity {
         });
     }
 
-    private void initRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recycler_view2);
-        RecyclerVaccinViewAdapter adapter2 = new RecyclerVaccinViewAdapter(this, mVaccins);
-        recyclerView.setAdapter(adapter2);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    private void setRecyclerView() {
+        mAdapter = new MultiSelectAdapter(mVaccins);
+        LinearLayoutManager manager = new LinearLayoutManager(GivenVaccinsActivity.this);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setAdapter(mAdapter);
     }
-
 }
