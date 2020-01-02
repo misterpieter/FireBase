@@ -1,4 +1,4 @@
-package be.volders.firebase;
+package be.volders.firebase.helpers;
 
 import android.os.Build;
 

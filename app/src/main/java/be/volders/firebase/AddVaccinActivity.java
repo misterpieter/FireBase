@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import be.volders.firebase.models.Vaccin;
+
 public class AddVaccinActivity extends AppCompatActivity {
 
     String TAG = "AddVAccinActivity";

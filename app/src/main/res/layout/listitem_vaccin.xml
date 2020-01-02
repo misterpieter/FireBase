@@ -11,7 +11,7 @@
         android:id="@+id/vaccin_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vaccin naam"
+        android:text="@string/txt_vaccinname"
         android:textColor="#000"
         android:textSize="17sp" />
 
@@ -21,9 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/vaccin_name"
         android:layout_marginTop="1dp"
-        android:text="ziekte Naam"
+        android:text="@string/txt_ziektename"
         android:textColor="#000"
-        android:textSize="13sp"
-        />
+        android:textSize="13sp" />
 
 </RelativeLayout>

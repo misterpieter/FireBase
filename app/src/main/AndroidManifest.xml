@@ -11,7 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ListBasicVaccinActivity"></activity>
-        <activity android:name=".ListUserActivity"></activity>
         <activity android:name=".AddUserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

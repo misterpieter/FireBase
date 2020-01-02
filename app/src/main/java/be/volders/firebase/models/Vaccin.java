@@ -1,4 +1,4 @@
-package be.volders.firebase;
+package be.volders.firebase.models;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +35,9 @@ public class Vaccin {
     }
 
     public void setCombiVaccin() {
-        if (this.getZiektes().isEmpty() || this.getZiektes().size() == 1){
+        if (this.getZiektes().isEmpty() || this.getZiektes().size() == 1) {
             this.boolCombiVaccin = false;
-        }
-        else this.boolCombiVaccin = true;
+        } else this.boolCombiVaccin = true;
     }
 
     public Boolean getBoolMultipleVaccinOptie() {
@@ -46,10 +45,9 @@ public class Vaccin {
     }
 
     public void setBoolMultipleVaccinOptie() {
-        if (this.getCombiVaccins().isEmpty()){
+        if (this.getCombiVaccins().isEmpty()) {
             this.boolMultipleVaccinOptie = false;
-        }
-        else this.boolMultipleVaccinOptie = true;
+        } else this.boolMultipleVaccinOptie = true;
     }
 
     public String getInfo() {
@@ -89,12 +87,12 @@ public class Vaccin {
         return combiVaccins;
     }
 
-    public void addZiekte(String ziekte){
+    public void addZiekte(String ziekte) {
         ziektes.add(ziekte);
         this.setCombiVaccin();
     }
 
-    public void deleteZiekte(String ziekte){
+    public void deleteZiekte(String ziekte) {
         ziektes.remove(ziekte);
         this.setCombiVaccin();
     }
@@ -107,35 +105,37 @@ public class Vaccin {
         this.minLeeftijden = minLeeftijden;
     }
 
-    public void addWeekInterval(int interval){
-        minLeeftijden.add(interval+" weken");
+    public void addWeekInterval(int interval) {
+        minLeeftijden.add(interval + " weken");
     }
-    public void addWeekInterval(String interval){
+
+    public void addWeekInterval(String interval) {
         minLeeftijden.add(interval);
     }
 
 
-    public void addMaandInterval(int interval){
-        minLeeftijden.add(interval+" maand");
+    public void addMaandInterval(int interval) {
+        minLeeftijden.add(interval + " maand");
     }
 
-    public void addMaandInterval(int interval, int interval2){
-        minLeeftijden.add(interval+" - "+ interval2+" maand");
+    public void addMaandInterval(int interval, int interval2) {
+        minLeeftijden.add(interval + " - " + interval2 + " maand");
     }
-    public void addMaandInterval(String interval){
+
+    public void addMaandInterval(String interval) {
         minLeeftijden.add(interval);
     }
 
 
-    public void addJaarInterval(int interval, int interval2){
-        minLeeftijden.add(interval+" - "+ interval2+" jaar");
+    public void addJaarInterval(int interval, int interval2) {
+        minLeeftijden.add(interval + " - " + interval2 + " jaar");
     }
 
-    public void addJaarInterval(int interval){
-        minLeeftijden.add(interval+" jaar");
+    public void addJaarInterval(int interval) {
+        minLeeftijden.add(interval + " jaar");
     }
 
-    public void addJaarInterval(String interval){
+    public void addJaarInterval(String interval) {
         minLeeftijden.add(interval);
     }
 
@@ -144,34 +144,34 @@ public class Vaccin {
         this.setBoolMultipleVaccinOptie();
     }
 
-    public void addVaccin(String vaccin){
+    public void addVaccin(String vaccin) {
         combiVaccins.add(vaccin);
         this.setBoolMultipleVaccinOptie();
     }
 
-    public void deleteVaccin(String vaccin){
+    public void deleteVaccin(String vaccin) {
         ziektes.remove(vaccin);
         this.setBoolMultipleVaccinOptie();
     }
 
-    public String showZiektes(){
+    public String showZiektes() {
         String str = "";
-         for(String ziekte : ziektes) {
-                str+="\t"+ziekte+"\n";
+        for (String ziekte : ziektes) {
+            str += "\t" + ziekte + "\n";
         }
 
         return str;
     }
 
-    public String showIntervallen(){
+    public String showIntervallen() {
         String str = "Vaccin te geven op volgende minLeeftijden:\n";
-            for (String x : minLeeftijden) {
-                str += "\t" + x + "\n";
+        for (String x : minLeeftijden) {
+            str += "\t" + x + "\n";
         }
         return str;
     }
 
-    public String showAllInfo(){
+    public String showAllInfo() {
         String str = "";
 
         if (ziektes != null) {
@@ -182,18 +182,18 @@ public class Vaccin {
             str += "\n" + showIntervallen();
         }
 
-        if(boolMultipleVaccinOptie == true){
-            str+="\n(Combo vaccin mogelijk met: ";
-            str+="\t"+getCombiVaccins()+")\n";
+        if (boolMultipleVaccinOptie == true) {
+            str += "\n(Combo vaccin mogelijk met: ";
+            str += "\t" + getCombiVaccins() + ")\n";
         }
 
-        str+= "\nInfo:\n"+info;
+        str += "\nInfo:\n" + info;
 
         return str;
     }
 
 
-    public void saveAllVaccins2Database(){
+    public void saveAllVaccins2Database() {
 
     }
 }

@@ -17,11 +17,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.volders.firebase.models.Vaccin;
+
 public class RecyclerVaccinViewAdapter extends RecyclerView.Adapter<RecyclerVaccinViewAdapter.ViewHolder> {
 
     private static final String TAG ="RecyclerVaccinViewAdapter";
     private Context mContext;
-    private List<Vaccin> mVaccins = new ArrayList<>();
+    private List<Vaccin> mVaccins;
     final DatabaseReference vaccinRef = FirebaseDatabase.getInstance().getReference().child("vaccin");;
 
     public RecyclerVaccinViewAdapter(Context mContext, ArrayList<Vaccin> mVaccins) {

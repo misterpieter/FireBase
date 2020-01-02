@@ -1,8 +1,4 @@
-package be.volders.firebase;
-
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+package be.volders.firebase.models;
 
 public class User {
 
@@ -12,7 +8,7 @@ public class User {
     private Boolean risicoGroep;
 
 
-    public User(String name,String gbDt) {
+    public User(String name, String gbDt) {
         this.name = name;
         this.gbDt = gbDt;
         this.zwanger = false;
@@ -20,7 +16,7 @@ public class User {
     }
 
     public User() {
-        this("","");
+        this("", "");
     }
 
     public String getName() {

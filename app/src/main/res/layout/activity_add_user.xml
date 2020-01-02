@@ -15,11 +15,12 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
-        android:hint="Naam"
+        android:hint="@string/name_hint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/txt_gbdt"
@@ -28,11 +29,12 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
-        android:hint="geboorte datum"
+        android:hint="@string/dob_hint"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtName"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtName"
+        android:importantForAutofill="no" />
 
 
     <RadioGroup
@@ -54,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:text="man" />
+            android:text="@string/rb_man" />
 
         <RadioButton
             android:id="@+id/rb_vrouw"
@@ -62,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:text="vrouw" />
+            android:text="@string/rb_vrouw" />
     </RadioGroup>
 
     <CheckBox
@@ -71,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="60dp"
-        android:text="Risico Groep"
+        android:text="@string/chb_risico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rbgr_geslacht" />
 
@@ -80,27 +82,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="235dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="4dp"
-        android:text="Voeg patient toe"
-        app:layout_constraintBottom_toTopOf="@+id/btnListPatients"
 
+        android:text="@string/btn_addpatient"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnListPatients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="84dp"
-        android:text="Lijst Patienten"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chb_risico" />
 
     <Button
         android:id="@+id/btnListVaccins"
@@ -108,11 +97,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:text="Lijst Vaccins"
+        android:layout_marginBottom="36dp"
+        android:text="@string/btn_listvaccins"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 

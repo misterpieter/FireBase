@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import be.volders.firebase.models.User;
+
 public class AddUserActivity extends AppCompatActivity {
 
     User user;
@@ -23,7 +25,6 @@ public class AddUserActivity extends AppCompatActivity {
     EditText txtgbDt;
 
     Button btnSave;
-    Button btnList;
     Button btnListVaccins;
     String TAG = "AddUserActivity: ";
 
@@ -33,7 +34,6 @@ public class AddUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
         user = new User();
-        final Intent i = new Intent(this, ListUserActivity.class);
         final Intent i2 = new Intent(this, ListBasicVaccinActivity.class);
 
 
@@ -41,7 +41,6 @@ public class AddUserActivity extends AppCompatActivity {
         txtName = findViewById(R.id.txtName);
         txtgbDt = findViewById(R.id.txt_gbdt);
         btnSave = findViewById(R.id.btnSavePatient);
-        btnList = findViewById(R.id.btnListPatients);
         btnListVaccins = findViewById(R.id.btnListVaccins);
 
 
@@ -150,16 +149,6 @@ public class AddUserActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-        //click button
-        btnList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(i);
-            }
-        });
-
 
         btnListVaccins.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -16,10 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+
+import be.volders.firebase.helpers.DateHelper;
+import be.volders.firebase.models.Vaccin;
 
 public class ListBasicVaccinActivity extends AppCompatActivity {
 
