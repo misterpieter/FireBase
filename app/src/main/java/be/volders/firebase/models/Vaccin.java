@@ -1,9 +1,10 @@
 package be.volders.firebase.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vaccin {
+public class Vaccin implements Serializable {
 
     private String naam;
     private String info;
@@ -212,4 +213,5 @@ public class Vaccin {
     public void setCombiVaccins(List<String> combiVaccins) {
         this.combiVaccins = combiVaccins;
     }
+
 }
