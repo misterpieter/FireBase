@@ -88,6 +88,11 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
         }
     }
 
+    /**
+     * Called when an item is clicked within the RecycleView.
+     * @param vaccin The Vaccin object that has been clicked.
+     * @param holder The ViewHolder object, containing the required UI elements
+     */
     private void itemClicked(Vaccin vaccin, MyViewHolder holder) {
         vaccin.setSelected(!vaccin.isSelected());
         holder.view.setBackgroundColor(vaccin.isSelected() ? Color.CYAN : Color.WHITE);

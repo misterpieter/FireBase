@@ -12,8 +12,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Class responsible for handling Date related actions and properties whithin the application
+ *
+ * @author Gaetan Dumortier
+ * @since 01/01/2019
+ */
 public class DateHelper {
 
+    /**
+     * Calculates the age of the patient and returns it in months.
+     * @param inputDate The date of birth of the patient as a string
+     * @return int the age of the patient converted into months
+     */
     // Requires API level 26 or above.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static int calculateAgeInMonths(String inputDate) {

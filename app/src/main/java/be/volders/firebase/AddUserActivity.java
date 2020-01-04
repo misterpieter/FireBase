@@ -62,19 +62,6 @@ public class AddUserActivity extends AppCompatActivity {
         nodeRef.child("node key").setValue("node value");
         nodeRef.child("child node").child("child key").setValue("child value");
 
-        /*
-        user = new User("Pieter Volders", "03/03/1983");
-        user.setRisicoGroep(true);
-        userRef.child(user.getName()).setValue(user);
-
-        user = new User("Gaetan Dumortier", "01/01/2000");
-        userRef.child(user.getName()).setValue(user);
-
-        user = new User("Vicky Lenaerts", "01/02/1986");
-        user.setZwanger(true);
-        userRef.child(user.getName()).setValue(user);
-         */
-
         // ----------------------- READ METHODS -----------------------
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -130,7 +117,13 @@ public class AddUserActivity extends AppCompatActivity {
 
                     clear();
 
-                    // TODO: Open new activity, displaying a multi-select view containing all vaccins, based on patient DOB
+                    // TODO: check intents (new intent also starting in MultiSelectAdapter)
+                    /*
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("patient", user);
+                    overview.putExtra("patient_bundle", bundle);
+                    startActivity(overview);
+                     */
                 }
             }
         });

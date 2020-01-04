@@ -14,6 +14,7 @@ import be.volders.firebase.models.Vaccin;
 
 /**
  * Class responsible for all actions and properties of the Firebase Database.
+ * which aren't many
  *
  * @author Gaetan Dumortier
  * @since 03/01/2020
@@ -31,6 +32,7 @@ public class FirebaseHelper {
 
                 for (DataSnapshot snapshot : vaccins.getChildren()) {
                     Vaccin vaccin = snapshot.getValue(Vaccin.class);
+
                     assert vaccin != null;
                     vaccinsList.add(vaccin);
                 }

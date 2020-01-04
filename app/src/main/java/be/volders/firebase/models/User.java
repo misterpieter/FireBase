@@ -1,6 +1,8 @@
 package be.volders.firebase.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String name;
     private String gbDt;
@@ -50,4 +52,5 @@ public class User {
     public void setRisicoGroep(Boolean risicoGroep) {
         this.risicoGroep = risicoGroep;
     }
+
 }
