@@ -17,4 +17,6 @@
     <string name="txt_vaccinname">Naam vaccin</string>
     <string name="txt_ziektename">Naam ziekte</string>
     <string name="btn_addvaccin">Vaccin toevoegen</string>
+
+    <string name="remaining_lbl_info">Volgende vaccins moeten nog worden toegediend</string>
 </resources>
