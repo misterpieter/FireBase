@@ -8,6 +8,7 @@ public class User implements Serializable {
     private String gbDt;
     private Boolean zwanger;
     private Boolean risicoGroep;
+    private String gender;
 
 
     public User(String name, String gbDt) {
@@ -15,6 +16,14 @@ public class User implements Serializable {
         this.gbDt = gbDt;
         this.zwanger = false;
         this.risicoGroep = false;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public User() {

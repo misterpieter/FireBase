@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import be.volders.firebase.GivenVaccinsActivity;
 import be.volders.firebase.models.Vaccin;
 
 /**
@@ -39,7 +40,7 @@ public class FirebaseHelper {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
                 System.out.println("The read failed: " + error.getMessage());
             }
         });

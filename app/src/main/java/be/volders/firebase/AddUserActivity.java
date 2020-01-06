@@ -26,17 +26,16 @@ public class AddUserActivity extends AppCompatActivity {
     EditText txtName, txtgbDt;
     RadioButton rbIsMan, rbIsWomen;
     CheckBox riskGroup;
-    Button btnSave, btnListVaccins, button;
+    Button btnSave, btnListVaccins;
     String TAG = "AddUserActivity: ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
-        user = new User();
+
         final Intent i2 = new Intent(this, ListBasicVaccinActivity.class);
         final Intent overview = new Intent(this, GivenVaccinsActivity.class);
-
 
 // ----------------------- UI SETUP -----------------------
         txtName = findViewById(R.id.txtName);
@@ -47,7 +46,6 @@ public class AddUserActivity extends AppCompatActivity {
 
         btnSave = findViewById(R.id.btnSavePatient);
         btnListVaccins = findViewById(R.id.btnListVaccins);
-        button = findViewById(R.id.button);
 
 // ----------------------- DATABASE SETUP -----------------------
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -78,7 +76,7 @@ public class AddUserActivity extends AppCompatActivity {
                 // -----------------------      v2       -----------------------
                 for (DataSnapshot snapshot : users.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    Log.d(TAG + " snapshot: ", user.toString());
+                    // Log.d(TAG + " snapshot: ", user.toString());
                 }
 
             }
@@ -90,7 +88,7 @@ public class AddUserActivity extends AppCompatActivity {
             }
         });
 
-        //click button
+        // Called when the add patient button is clicked.
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,27 +101,25 @@ public class AddUserActivity extends AppCompatActivity {
                     user = new User(name, gebDt);
                     userRef.child(user.getName()).setValue(user);
 
-                    // Send patient name and date of birth as extra with intent.
-                    i2.putExtra("patient_name", name);
-                    i2.putExtra("patient_dob", gebDt);
-
                     // Check if patient is in a riskgroup or not
                     boolean isRiskGroup = riskGroup.isChecked();
-                    i2.putExtra("patient_riskgroup", isRiskGroup);
 
                     // Make out what gender is selected
                     String gender = rbIsMan.isChecked() ? "m" : "v";
-                    i2.putExtra("patient_gender", gender);
 
-                    clear();
+                    // Assign values to patient
+                    user.setName(name);
+                    user.setGbDt(gebDt);
+                    user.setRisicoGroep(isRiskGroup);
+                    user.setGender(gender);
 
-                    // TODO: check intents (new intent also starting in MultiSelectAdapter)
-                    /*
+                    // Create a new bundle, containing the serialized User object and start the GivenVaccins activity.
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("patient", user);
                     overview.putExtra("patient_bundle", bundle);
                     startActivity(overview);
-                     */
+
+                    clear();
                 }
             }
         });
@@ -132,13 +128,6 @@ public class AddUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(i2);
-            }
-        });
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(overview);
             }
         });
     }

@@ -25,8 +25,6 @@ public class ListBasicVaccinActivity extends AppCompatActivity {
 
     Intent i;
     Button btnVaccinInput;
-    String patientName;
-    String patientDob;
 
     private ArrayList<Vaccin> mVaccins = new ArrayList<>();
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -40,13 +38,6 @@ public class ListBasicVaccinActivity extends AppCompatActivity {
 
         btnVaccinInput = findViewById(R.id.buttonVaccinInput);
         i = new Intent(this, AddVaccinActivity.class);
-
-        // Read patient data from AddUserActivity
-        Intent patientData = getIntent();
-        if (patientData.getExtras() != null) {
-            patientName = patientData.getStringExtra("patient_name");
-            patientDob = patientData.getStringExtra("patient_dob");
-        }
 
         initDatabaseData();
 
@@ -64,15 +55,6 @@ public class ListBasicVaccinActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DataSnapshot vaccins = dataSnapshot.child("vaccin");
-                int age = 0;
-
-                // Requires API level 26 or above.
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    if (patientDob != null) {
-                        age = DateHelper.calculateAgeInMonths(patientDob);
-                        System.out.println("leeftijd in maanden: " + age);
-                    }
-                }
 
                 for (DataSnapshot snapshot : vaccins.getChildren()) {
                     Vaccin vaccin = snapshot.getValue(Vaccin.class);
