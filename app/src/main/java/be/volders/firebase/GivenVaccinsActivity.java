@@ -2,6 +2,7 @@ package be.volders.firebase;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,24 +14,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import be.volders.firebase.adapters.MultiSelectAdapter;
 import be.volders.firebase.helpers.DateHelper;
-import be.volders.firebase.helpers.FirebaseHelper;
 import be.volders.firebase.models.User;
 import be.volders.firebase.models.Vaccin;
 
 public class GivenVaccinsActivity extends AppCompatActivity {
 
+    private final static String TITLE = "Reeds toegediende vaccins";
+
     private RecyclerView mRecyclerView;
-    private User user;
+    public User user;
+    private int userAge;
+    private ArrayList<Vaccin> allVaccins = new ArrayList<>();
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference = database.getReference();
-
-    private ArrayList<Vaccin> allVaccins = new ArrayList<>();
-    private ArrayList<Vaccin> filteredList = new ArrayList<>();
 
     private void initDatabaseData() {
         reference.addValueEventListener(new ValueEventListener() {
@@ -41,7 +44,38 @@ public class GivenVaccinsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : vaccins.getChildren()) {
                     Vaccin vaccin = snapshot.getValue(Vaccin.class);
 
-                    allVaccins.add(vaccin);
+                    assert vaccin != null;
+                    // some real dirty-ass code
+                    for (String minAge : vaccin.getMinLeeftijden()) {
+                        // Vaccines till max. 6 years
+                        if (userAge <= 72) {
+                            if (Integer.parseInt(minAge) <= 72) {
+                                if (!allVaccins.contains(vaccin)) {
+                                    allVaccins.add(vaccin);
+                                }
+                            }
+                            // Vaccines from 6 till 19 years
+                        } else if (userAge >= 72 && userAge <= 228) {
+                            if (Integer.parseInt(minAge) >= 72 && Integer.parseInt(minAge) <= 228) {
+                                if (!allVaccins.contains(vaccin)) {
+                                    allVaccins.add(vaccin);
+                                }
+                            }
+                            // Vaccines from 19 years and up
+                        } else if (userAge >= 228) {
+                            if (Integer.parseInt(minAge) >= 228) {
+                                if (!allVaccins.contains(vaccin)) {
+                                    allVaccins.add(vaccin);
+                                }
+                            }
+                        } else {
+                            if (userAge <= Integer.parseInt(minAge)) {
+                                if (!allVaccins.contains(vaccin)) {
+                                    allVaccins.add(vaccin);
+                                }
+                            }
+                        }
+                    }
                 }
                 setRecyclerView();
             }
@@ -58,12 +92,13 @@ public class GivenVaccinsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_given_vaccins);
         mRecyclerView = findViewById(R.id.recycler_view);
+        Button btnNoVaccines = findViewById(R.id.btnNoVaccins);
 
-        initDatabaseData();
+        Objects.requireNonNull(getSupportActionBar()).setTitle(TITLE);
 
         /*
-            Get the intent sent from AddUserActivity and get the Intent's extra,
-            containing the Serialized User object with patient info.
+            Get the intent from the @link{#AddUserActivity}, containing
+            the Serialized patient object.
          */
         Intent patientIntent = getIntent();
         if (patientIntent != null) {
@@ -71,41 +106,25 @@ public class GivenVaccinsActivity extends AppCompatActivity {
                 Bundle bundle = patientIntent.getBundleExtra("patient_bundle");
                 assert bundle != null;
                 this.user = (User) bundle.getSerializable("patient");
+
+                assert this.user != null;
+                this.userAge = DateHelper.calculateAgeInMonths(this.user.getGbDt());
+
+                initDatabaseData();
             }
         }
 
         /*
-            Get the intent sent from the MultiSelectAdapter and get the Intent's extra,
-            containing an ArrayList of all selected Vaccin objects.
-        */
-        /*
-        Intent intent = getIntent();
-        if (intent != null) {
-            if (intent.getExtras() != null) {
-                Bundle bundle = intent.getBundleExtra("bundle");
-                assert bundle != null;
-                ArrayList<Vaccin> selectedVaccins = (ArrayList<Vaccin>) bundle.getSerializable("vaccins");
+            Start a new activity to @link{#RemainingVaccinsActivity} when the btnNoVaccins is clicked.
+         */
+        btnNoVaccines.setOnClickListener(view -> {
+            Intent intent = new Intent(this, RemainingVaccinsActivity.class);
+            Bundle bundle = new Bundle();
 
-                assert selectedVaccins != null;
-                for (Vaccin selectedVaccin : selectedVaccins) {
-                    System.out.println(selectedVaccin.getNaam());
-                }
-            }
-        }
-        */
-        filterVaccins();
-    }
-
-    /**
-     * Filter the list of all vaccins, based on the patient's age, gender, riskgroup, ...
-     * and add all condition-matching vaccins to a new ArrayList, called filteredList.
-     */
-    private void filterVaccins() {
-        // Requires API level 26 or above.
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            int patientAge = DateHelper.calculateAgeInMonths(this.user.getGbDt());
-            // TODO: for-loop to check conditions (date of birth etc.)
-        }
+            bundle.putSerializable("vaccins", allVaccins);
+            intent.putExtra("bundle", bundle);
+            startActivity(intent);
+        });
     }
 
     public void setRecyclerView() {

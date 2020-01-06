@@ -16,25 +16,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 import be.volders.firebase.models.Vaccin;
 
 public class AddVaccinActivity extends AppCompatActivity {
 
+    private static final String TITLE = "Vaccin toevoegen";
+
     String TAG = "AddVAccinActivity";
-
     Vaccin vaccin;
-
     EditText txtVaccinName;
     EditText txtZiekteNaam;
-
     Button btnSaveVaccin;
     Button btnShowListVaccins;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_vaccin);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle(TITLE);
+
         vaccin = new Vaccin();
         final Intent i = new Intent(this, ListBasicVaccinActivity.class);
 
@@ -44,18 +47,25 @@ public class AddVaccinActivity extends AppCompatActivity {
         btnSaveVaccin = findViewById(R.id.btnSaveVaccin);
         btnShowListVaccins = findViewById(R.id.btnShowVaccinList);
 
-
         // ----------------------- DATABASE SETUP -----------------------
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference reference = database.getReference();
         final DatabaseReference vaccinRef = database.getReference().child("vaccin");
         // ----------------------- INITIAL LOAD: ALL VACCINS -----------------------
         vaccin = new Vaccin("IPV");
+        /*
         vaccin.addWeekInterval(8);
         vaccin.addWeekInterval(12);
         vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
-        vaccin.addJaarInterval(5, 6);
+         */
+
+        vaccin.addMaandInterval("2");
+        vaccin.addMaandInterval("3");
+        vaccin.addMaandInterval("4");
+
+        vaccin.addMaandInterval("13");
+        vaccin.addMaandInterval("15");
+        // vaccin.addJaarInterval(5, 6);
         vaccin.addZiekte("Poliomyelitis");
         vaccin.addVaccin("DTPa");
         vaccin.addVaccin("Hib");
@@ -65,11 +75,19 @@ public class AddVaccinActivity extends AppCompatActivity {
         vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
         vaccin = new Vaccin("DTPa");
+        /*
         vaccin.addWeekInterval(8);
         vaccin.addWeekInterval(12);
         vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
-        vaccin.addJaarInterval(5, 6);
+        */
+
+        vaccin.addMaandInterval("2");
+        vaccin.addMaandInterval("3");
+        vaccin.addMaandInterval("4");
+
+        vaccin.addMaandInterval("13");
+        vaccin.addMaandInterval("15");
+        // vaccin.addJaarInterval(5, 6);
         vaccin.addZiekte("Difterie");
         vaccin.addZiekte("Tetanus");
         vaccin.addZiekte("Kinkhoest");
@@ -81,10 +99,11 @@ public class AddVaccinActivity extends AppCompatActivity {
         vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
         vaccin = new Vaccin("dTpa");
-        vaccin.addJaarInterval(15, 16);
-        vaccin.addJaarInterval(">= 25 jaar en elke 10 jaren");
-        vaccin.addJaarInterval(">= 65 jaar");
-        vaccin.addJaarInterval("Tijdens zwangerschap");
+        vaccin.addJaarInterval("15");
+        vaccin.addJaarInterval("16");
+        //vaccin.addJaarInterval(">= 25 jaar en elke 10 jaren");
+        //vaccin.addJaarInterval(">= 65 jaar");
+        // vaccin.addJaarInterval("Tijdens zwangerschap");
         vaccin.addZiekte("Difterie");
         vaccin.addZiekte("Tetanus");
         vaccin.addZiekte("Kinkhoest");
@@ -94,10 +113,18 @@ public class AddVaccinActivity extends AppCompatActivity {
         vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
         vaccin = new Vaccin("Hib");
+        /*
         vaccin.addWeekInterval(8);
         vaccin.addWeekInterval(12);
         vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
+        */
+
+        vaccin.addMaandInterval("2");
+        vaccin.addMaandInterval("3");
+        vaccin.addMaandInterval("4");
+
+        vaccin.addMaandInterval("13");
+        vaccin.addMaandInterval("15");
         vaccin.addZiekte("Haemophilus");
         vaccin.addZiekte("Influenzae");
         vaccin.addZiekte("type b (Hib)");
@@ -108,10 +135,12 @@ public class AddVaccinActivity extends AppCompatActivity {
         vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
         vaccin = new Vaccin("HBV");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(12);
-        vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
+        vaccin.addMaandInterval("2");
+        vaccin.addMaandInterval("3");
+        vaccin.addMaandInterval("4");
+
+        vaccin.addMaandInterval("13");
+        vaccin.addMaandInterval("15");
         vaccin.addZiekte("Hepatitis B");
         vaccin.addVaccin("IPV");
         vaccin.addVaccin("DTPa");
@@ -123,10 +152,12 @@ public class AddVaccinActivity extends AppCompatActivity {
 
 
         vaccin = new Vaccin("MBR");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(12);
-        vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(13, 15);
+        vaccin.addMaandInterval("2");
+        vaccin.addMaandInterval("3");
+        vaccin.addMaandInterval("4");
+
+        vaccin.addMaandInterval("13");
+        vaccin.addMaandInterval("15");
         vaccin.addZiekte("Mazelen");
         vaccin.addZiekte("Bof");
         vaccin.addZiekte("Rubella");
@@ -138,17 +169,19 @@ public class AddVaccinActivity extends AppCompatActivity {
 
 
         vaccin = new Vaccin("MenC");
-        vaccin.addMaandInterval(13, 15);
+        vaccin.addMaandInterval("13");
+        vaccin.addMaandInterval("15");
         vaccin.addZiekte("Meningokok C");
         vaccin.setInfo("De vaccinatie tegen meningokokken van serogroep C (MenC) wordt éénmalig op de leeftijd van 13-15 maanden aanbevolen, met een geconjugeerd vaccin (HGR 8810).");
         vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
 
         vaccin = new Vaccin("PCV13");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(16);
-        vaccin.addMaandInterval(12);
-        vaccin.addJaarInterval(">=65");
+        vaccin.addMaandInterval("2");
+        vaccin.addMaandInterval("4");
+        vaccin.addMaandInterval("12");
+        vaccin.addMaandInterval("780");
+        // vaccin.addJaarInterval(">=65");
         vaccin.addZiekte("Pneumokok");
         vaccin.setInfo("De vaccinatie tegen pneumokokken door middel van het PCV13-vaccin omvat 3 dosissen volgens het 2+1 schema. Tussen de dosissen wordt een interval van 8 weken gerespecteerd, de derde dosis volgt zo vroeg mogelijk in het tweede levensjaar, bij voorkeur op de leeftijd van 12 maanden (HGR 9519).\n" +
                 "De keuze voor het pneumokokkenvaccin is gebaseerd op de epidemiologie van invasieve pneumokokkeninfecties. Voor 2019 werd hierdoor de voorkeur gegeven voor het PCV13 vaccin.\n" +
@@ -158,29 +191,33 @@ public class AddVaccinActivity extends AppCompatActivity {
         vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
         vaccin = new Vaccin("PCV23");
-        vaccin.addJaarInterval(">=65");
+        // vaccin.addJaarInterval(">=65");
+        vaccin.addMaandInterval("780");
         vaccin.addZiekte("Pneumokok");
         vaccin.setInfo("Pneumokokkenvaccinatie wordt aanbevolen voor alle volwassenen ouder dan 65 jaar. Een primovaccinatie met het geconjugeerde vaccin PCV13, gevolgd door een dosis van polysaccharide-vaccin PCV23 na minimaal 8 weken wordt aanbevolen (HGR 9210).");
         vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
         vaccin = new Vaccin("Rota");
-        vaccin.addWeekInterval(8);
-        vaccin.addWeekInterval(12);
-        vaccin.addWeekInterval("(16)");
+        vaccin.addMaandInterval("2");
+        vaccin.addMaandInterval("3");
+        vaccin.addMaandInterval("4");
         vaccin.addZiekte("Rotavirus");
         vaccin.setInfo("Het peroraal toe te dienen rotavirus vaccin wordt aangeraden bij voor alle zuigelingen; de volledige vaccinatie moet vóór de leeftijd van zes maanden afgerond te zijn. Naargelang het gebruikte vaccin zal het schema bestaan uit 2 dosissen (Rotarix®) of 3 dosissen (RotaTeq®). Na deze leeftijd wordt geen enkele inhaalvaccinatie van het rotavaccin aanbevolen (HGR 8812).");
         vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
         vaccin = new Vaccin("HPV");
-        vaccin.addJaarInterval(11, 13);
-        vaccin.addJaarInterval(11, 13);
+        vaccin.addMaandInterval("132");
+        vaccin.addMaandInterval("144");
+        vaccin.addMaandInterval("156");
+
         vaccin.addZiekte("Humaan Papillomavirus");
         vaccin.setInfo("Jaarlijkse algemene profylactische vaccinatie van een cohorte van meisjes en jongens van 9 tot en met 14 jaar wordt aanbevolen volgens een schema met 2 dosissen van een adequaat HPV-vaccin (0-6 maanden). Om een hoge vaccinatiegraad te garanderen wordt deze vaccinatie bij voorkeur georganiseerd binnen de schoolgezondheidszorg (11-13 jaar), maar iedere arts-vaccinator kan deze vaccinatie uitvoeren. Vanaf de leeftijd van 15 jaar wordt voor een inhaalvaccinatie, een drie-dosis regime aanbevolen (HGR 9181).");
         vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
         vaccin = new Vaccin("Influenza tetra");
-        vaccin.addJaarInterval(">= 65 jaar");
-        vaccin.addJaarInterval("Tijdens zwangerschap");
+        // vaccin.addJaarInterval(">= 65 jaar");
+        vaccin.addMaandInterval("780");
+        // vaccin.addJaarInterval("Tijdens zwangerschap"); // ???
         vaccin.addZiekte("Influenza");
         vaccin.setInfo("Een jaarlijkse dosis van het geïnactiveerd vaccin tegen influenza, met 2 stammen van het influenza A-virus en 2 stammen van het influenza B-virus, wordt aanbevolen voor alle volwassenen vanaf de leeftijd van 65 jaar, personen in instellingen, zwangere vrouwen ongeacht de fase van de zwangerschap.\n" +
                 "De aanbevelingen over 'seizoensgriep' worden jaarlijks herzien door de HGR (HGR 9488)\n");
@@ -193,15 +230,13 @@ public class AddVaccinActivity extends AppCompatActivity {
                 String data = "";
                 data = dataSnapshot.getValue().toString();
 
-
                 // ----------------------- GET ALL Vaccins  -----------------------
                 DataSnapshot vaccins = dataSnapshot.child("vaccin");
 
                 for (DataSnapshot snapshot : vaccins.getChildren()) {
                     Vaccin vaccin = snapshot.getValue(Vaccin.class);
-                    Log.d(TAG+" snapshot: ", vaccin.toString());
+                    Log.d(TAG + " snapshot: ", vaccin.toString());
                 }
-
             }
 
             @Override
@@ -211,44 +246,31 @@ public class AddVaccinActivity extends AppCompatActivity {
             }
         });
 
-
         //click button
-        btnSaveVaccin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String vaccinName = txtVaccinName.getText().toString();
-                String ziekteNaam = txtZiekteNaam.getText().toString();
+        btnSaveVaccin.setOnClickListener(view -> {
+            String vaccinName = txtVaccinName.getText().toString();
+            String ziekteNaam = txtZiekteNaam.getText().toString();
 
-                if(vaccinName.isEmpty()){
-                    Toast.makeText(AddVaccinActivity.this, "Gelieve eerst een vaccin naam in te vullen", Toast.LENGTH_SHORT).show();
-                }
-                if(ziekteNaam.isEmpty()){
-                    Toast.makeText(AddVaccinActivity.this, "Gelieve eerst een ziekte in te vullen", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    vaccin = new Vaccin(vaccinName);
-                    vaccin.addZiekte(ziekteNaam);
-                    vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
-
-                    clear();
-
-                    Toast.makeText(AddVaccinActivity.this, vaccinName+ " opgeslagen!", Toast.LENGTH_SHORT).show();
-                    startActivity(i);
-                }
+            if (vaccinName.isEmpty()) {
+                Toast.makeText(AddVaccinActivity.this, "Gelieve eerst een vaccin naam in te vullen", Toast.LENGTH_SHORT).show();
             }
-        });
+            if (ziekteNaam.isEmpty()) {
+                Toast.makeText(AddVaccinActivity.this, "Gelieve eerst een ziekte in te vullen", Toast.LENGTH_SHORT).show();
+            } else {
+                vaccin = new Vaccin(vaccinName);
+                vaccin.addZiekte(ziekteNaam);
+                vaccinRef.child(vaccin.getNaam()).setValue(vaccin);
 
+                clear();
 
-        //click button
-        btnShowListVaccins.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                Toast.makeText(AddVaccinActivity.this, vaccinName + " opgeslagen!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
             }
         });
 
+        //click button
+        btnShowListVaccins.setOnClickListener(view -> startActivity(i));
     }
-
 
     private void clear() {
         txtVaccinName.setText("");

@@ -18,9 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 import be.volders.firebase.models.User;
 
 public class AddUserActivity extends AppCompatActivity {
+
+    private static final String TITLE = "Nieuwe patiënt";
 
     User user;
     EditText txtName, txtgbDt;
@@ -33,6 +37,9 @@ public class AddUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle(TITLE);
+
 
         final Intent i2 = new Intent(this, ListBasicVaccinActivity.class);
         final Intent overview = new Intent(this, GivenVaccinsActivity.class);
@@ -89,47 +96,39 @@ public class AddUserActivity extends AppCompatActivity {
         });
 
         // Called when the add patient button is clicked.
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = txtName.getText().toString();
-                String gebDt = txtgbDt.getText().toString();
+        btnSave.setOnClickListener(view -> {
+            String name = txtName.getText().toString();
+            String gebDt = txtgbDt.getText().toString();
 
-                if (name.isEmpty() || gebDt.isEmpty()) {
-                    Toast.makeText(AddUserActivity.this, "Gelieve alle velden in te vullen", Toast.LENGTH_SHORT).show();
-                } else {
-                    user = new User(name, gebDt);
-                    userRef.child(user.getName()).setValue(user);
+            if (name.isEmpty() || gebDt.isEmpty()) {
+                Toast.makeText(AddUserActivity.this, "Gelieve alle velden in te vullen", Toast.LENGTH_SHORT).show();
+            } else {
+                user = new User(name, gebDt);
+                userRef.child(user.getName()).setValue(user);
 
-                    // Check if patient is in a riskgroup or not
-                    boolean isRiskGroup = riskGroup.isChecked();
+                // Check if patient is in a riskgroup or not
+                boolean isRiskGroup = riskGroup.isChecked();
 
-                    // Make out what gender is selected
-                    String gender = rbIsMan.isChecked() ? "m" : "v";
+                // Make out what gender is selected
+                String gender = rbIsMan.isChecked() ? "m" : "v";
 
-                    // Assign values to patient
-                    user.setName(name);
-                    user.setGbDt(gebDt);
-                    user.setRisicoGroep(isRiskGroup);
-                    user.setGender(gender);
+                // Assign values to patient
+                user.setName(name);
+                user.setGbDt(gebDt);
+                user.setRisicoGroep(isRiskGroup);
+                user.setGender(gender);
 
-                    // Create a new bundle, containing the serialized User object and start the GivenVaccins activity.
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("patient", user);
-                    overview.putExtra("patient_bundle", bundle);
-                    startActivity(overview);
+                // Create a new bundle, containing the serialized User object and start the GivenVaccins activity.
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("patient", user);
+                overview.putExtra("patient_bundle", bundle);
+                startActivity(overview);
 
-                    clear();
-                }
+                // clear();
             }
         });
 
-        btnListVaccins.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(i2);
-            }
-        });
+        btnListVaccins.setOnClickListener(view -> startActivity(i2));
     }
 
     private void clear() {

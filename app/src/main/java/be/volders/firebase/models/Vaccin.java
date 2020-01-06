@@ -107,38 +107,34 @@ public class Vaccin implements Serializable {
         this.minLeeftijden = minLeeftijden;
     }
 
-    public void addWeekInterval(int interval) {
-        minLeeftijden.add(interval + " weken");
-    }
-
     public void addWeekInterval(String interval) {
         minLeeftijden.add(interval);
     }
 
-
-    public void addMaandInterval(int interval) {
-        minLeeftijden.add(interval + " maand");
-    }
-
-    public void addMaandInterval(int interval, int interval2) {
-        minLeeftijden.add(interval + " - " + interval2 + " maand");
-    }
-
     public void addMaandInterval(String interval) {
+        // minLeeftijden.add(interval + " maand");
         minLeeftijden.add(interval);
     }
 
+    /*
+    public void addMaandInterval(String interval, String interval2) {
+        // minLeeftijden.add(interval + " - " + interval2 + " maand");
+        minLeeftijden.add(interval);
+        minLeeftijden.add(interval2);
+    }
+    */
 
+    /*
     public void addJaarInterval(int interval, int interval2) {
-        minLeeftijden.add(interval + " - " + interval2 + " jaar");
+        minLeeftijden.add(interval);
+        minLeeftijden.add(interval2);
+        // minLeeftijden.add(interval + " - " + interval2 + " jaar");
     }
-
-    public void addJaarInterval(int interval) {
-        minLeeftijden.add(interval + " jaar");
-    }
+    */
 
     public void addJaarInterval(String interval) {
         minLeeftijden.add(interval);
+        // minLeeftijden.add(interval + " jaar");
     }
 
     public void addVaccins(List<String> vaccins) {
@@ -184,7 +180,7 @@ public class Vaccin implements Serializable {
             str += "\n" + showIntervallen();
         }
 
-        if (boolMultipleVaccinOptie == true) {
+        if (boolMultipleVaccinOptie) {
             str += "\n(Combo vaccin mogelijk met: ";
             str += "\t" + getCombiVaccins() + ")\n";
         }

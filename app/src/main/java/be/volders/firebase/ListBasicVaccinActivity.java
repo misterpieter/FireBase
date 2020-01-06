@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import be.volders.firebase.adapters.RecyclerVaccinViewAdapter;
 import be.volders.firebase.helpers.DateHelper;
@@ -30,11 +31,14 @@ public class ListBasicVaccinActivity extends AppCompatActivity {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     final DatabaseReference reference = database.getReference();
     private static final String TAG = "ListA: ";
+    private static final String TITLE = "Overzicht vaccins";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_vaccins);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle(TITLE);
 
         btnVaccinInput = findViewById(R.id.buttonVaccinInput);
         i = new Intent(this, AddVaccinActivity.class);
@@ -42,12 +46,7 @@ public class ListBasicVaccinActivity extends AppCompatActivity {
         initDatabaseData();
 
         //click button
-        btnVaccinInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(i);
-            }
-        });
+        btnVaccinInput.setOnClickListener(view -> startActivity(i));
     }
 
     private void initDatabaseData() {

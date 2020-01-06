@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import be.volders.firebase.GivenVaccinsActivity;
 import be.volders.firebase.R;
+import be.volders.firebase.RemainingVaccinsActivity;
 import be.volders.firebase.models.Vaccin;
 
 /**
@@ -27,13 +29,13 @@ import be.volders.firebase.models.Vaccin;
  */
 public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.MyViewHolder> {
 
-    private List<Vaccin> vaccinList;
+    private ArrayList<Vaccin> vaccinList;
     private ArrayList<Vaccin> selectedVaccins = new ArrayList<>();
-    private GivenVaccinsActivity givenVaccinsActivity;
+    private AppCompatActivity activityContext;
 
-    public MultiSelectAdapter(List<Vaccin> vaccinList, GivenVaccinsActivity givenVaccinsActivity) {
+    public MultiSelectAdapter(ArrayList<Vaccin> vaccinList, AppCompatActivity activityContext) {
         this.vaccinList = vaccinList;
-        this.givenVaccinsActivity = givenVaccinsActivity;
+        this.activityContext = activityContext;
     }
 
     @NonNull
@@ -50,25 +52,20 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
         // Set UI members
         holder.vaccinName.setText(vaccin.getNaam());
 
-        String ziektes = "";
+        StringBuilder ziektes = new StringBuilder();
         for (String ziekte : vaccin.getZiektes()) {
-            ziektes += ziekte + " ";
+            ziektes.append(ziekte).append(" ");
         }
         holder.vaccinInfo.setText("Ziektes: " + ziektes);
-        holder.view.setBackgroundColor(vaccin.isSelected() ? Color.CYAN : Color.WHITE);
+        holder.view.setBackgroundColor(Color.WHITE);
 
-        holder.vaccinName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemClicked(vaccin, holder);
-            }
-        });
-        holder.vaccinInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemClicked(vaccin, holder);
-            }
-        });
+        // Only let the GivenVaccinsActivity have a click-able recycleview.
+        if (this.activityContext.getClass().equals(GivenVaccinsActivity.class)) {
+            holder.view.setBackgroundColor(vaccin.isSelected() ? Color.CYAN : Color.WHITE);
+
+            holder.vaccinName.setOnClickListener(view -> itemClicked(vaccin, holder));
+            holder.vaccinInfo.setOnClickListener(view -> itemClicked(vaccin, holder));
+        }
     }
 
     @Override
@@ -90,6 +87,7 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
 
     /**
      * Called when an item is clicked within the RecycleView.
+     *
      * @param vaccin The Vaccin object that has been clicked.
      * @param holder The ViewHolder object, containing the required UI elements
      */
@@ -98,28 +96,31 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
         holder.view.setBackgroundColor(vaccin.isSelected() ? Color.CYAN : Color.WHITE);
         this.selectedVaccins.add(vaccin);
 
-        if(!vaccin.isSelected()) {
+        if (!vaccin.isSelected()) {
             this.selectedVaccins.remove(vaccin);
         }
 
         /*
-          Start a new activity when the btnOnProceed button is clicked.
+          Start a new activity to @link{#RemainingVaccinsActivity} when the btnOnProceed button is clicked.
         */
-        givenVaccinsActivity.findViewById(R.id.btnProceed).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*
-                  Start a new intent and create a new Bundle containing the ArrayList of selected vaccins.
-                  Next, add the Bundle to the intent as an extra and start the intent.
-                */
-                Intent intent = new Intent(givenVaccinsActivity, GivenVaccinsActivity.class);
-                Bundle bundle = new Bundle();
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-
-                bundle.putSerializable("vaccins", selectedVaccins);
-                intent.putExtra("bundle", bundle);
-                givenVaccinsActivity.startActivity(intent);
+        activityContext.findViewById(R.id.btnProceed).setOnClickListener(view -> {
+            /*
+              Start a new intent and create a new Bundle containing an ArrayList of remaining vaccines.
+              Next, add the Bundle to the intent as an extra and start the intent.
+            */
+            ArrayList<Vaccin> remainingVaccins = new ArrayList<>();
+            for (Vaccin vaccin1 : this.vaccinList) {
+                if (!vaccin1.isSelected()) {
+                    remainingVaccins.add(vaccin1);
+                }
             }
+
+            Intent intent = new Intent(activityContext, RemainingVaccinsActivity.class);
+            Bundle bundle = new Bundle();
+
+            bundle.putSerializable("vaccins", remainingVaccins);
+            intent.putExtra("bundle", bundle);
+            activityContext.startActivity(intent);
         });
     }
 }
